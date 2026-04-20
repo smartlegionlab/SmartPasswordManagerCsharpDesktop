@@ -1,4 +1,4 @@
-# Smart Password Manager Desktop (C#) <sup>v1.0.0</sup>
+# Smart Password Manager Desktop (C#) <sup>v1.0.1</sup>
 
 **Desktop manager for deterministic smart passwords. Generate, manage, and retrieve passwords without storing them. Your secret phrase never leaves your device.**
 

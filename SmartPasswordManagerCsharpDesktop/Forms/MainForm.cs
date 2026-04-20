@@ -39,7 +39,7 @@ public partial class MainForm : Form
 
     private void InitializeComponent()
     {
-        this.Text = "Smart Password Manager v1.0.0";
+        this.Text = "Smart Password Manager v1.0.1";
         this.Size = new Size(1100, 750);
         this.StartPosition = FormStartPosition.CenterScreen;
         this.MinimumSize = new Size(800, 600);

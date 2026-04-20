@@ -68,7 +68,7 @@ public partial class AboutForm : Form
 
         var versionLabel = new Label
         {
-            Text = $"Version 1.0.0 | .NET 10.0 | Windows/Linux",
+            Text = $"Version 1.0.1 | .NET 10.0 | Windows/Linux",
             Font = new Font("Segoe UI", 10),
             ForeColor = Color.FromArgb(160, 160, 170),
             TextAlign = ContentAlignment.MiddleCenter,

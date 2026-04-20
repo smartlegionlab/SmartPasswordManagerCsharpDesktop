@@ -118,7 +118,7 @@ public partial class HelpForm : Form
 "  • Use emoji or non-Latin characters for stronger secrets\n\n" +
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
-"  Version 1.0.0 | Copyright © 2026 Alexander Suvorov\n" +
+"  Version 1.0.1 | Copyright © 2026 Alexander Suvorov\n" +
 "  Licensed under BSD 3-Clause License\n" +
 "══════════════════════════════════════════════════════════════════════════════";
 
