@@ -132,5 +132,16 @@ public partial class EditPasswordForm : Form
         layout.Controls.Add(buttonPanel, 1, 3);
 
         this.Controls.Add(layout);
+
+        _okButton.Click += (s, e) =>
+        {
+            if (string.IsNullOrWhiteSpace(Description))
+            {
+                MessageBox.Show("Description cannot be empty!\n\nPlease enter a description for this password.",
+                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+        };
     }
 }

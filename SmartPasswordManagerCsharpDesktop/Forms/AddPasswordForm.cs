@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace SmartPasswordManagerCsharpDesktop.Forms;
 
 public partial class AddPasswordForm : Form
@@ -281,14 +283,25 @@ public partial class AddPasswordForm : Form
         {
             if (string.IsNullOrWhiteSpace(Description))
             {
-                MessageBox.Show("Description is required", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Description cannot be empty!\n\nPlease enter a description for this password.",
+                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.DialogResult = DialogResult.None;
                 return;
             }
+
+            if (string.IsNullOrWhiteSpace(Secret))
+            {
+                MessageBox.Show("Secret phrase is required!\n\nPlease enter your secret phrase.",
+                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+
             if (Secret.Length < 12)
             {
                 MessageBox.Show(
                     "SECURITY ERROR!\n\n" +
+                    $"Your secret phrase is only {Secret.Length} characters long.\n" +
                     "Secret phrase must be at least 12 characters.\n" +
                     "Short phrases are vulnerable to brute force attacks.\n\n" +
                     "Please use a longer, more complex secret phrase.",
@@ -304,8 +317,9 @@ public partial class AddPasswordForm : Form
                 var result = MessageBox.Show(
                     "SECURITY WARNING!\n\n" +
                     $"Your secret phrase is only {Secret.Length} characters long.\n" +
-                    "For better security, use 16+ characters with mixed case, numbers, and symbols.\n\n" +
-                    "Are you sure you want to continue with a weaker secret?",
+                    "For better security, we strongly recommend using 16+ characters\n" +
+                    "with mixed case, numbers, and symbols.\n\n" +
+                    "Are you sure you want to continue with this secret phrase?",
                     "Weak Secret Warning",
                     MessageBoxButtons.YesNo,
                     MessageBoxIcon.Warning);
