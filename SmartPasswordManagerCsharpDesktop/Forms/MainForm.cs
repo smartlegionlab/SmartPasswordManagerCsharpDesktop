@@ -1,4 +1,4 @@
-using SmartLegionLab.SmartPasswordLib;
+using SmartLegionLab.SmartPassLib;
 using System.Diagnostics;
 using System.Text.Json;
 using SmartPasswordManagerCsharpDesktop.Helpers;
