@@ -1,4 +1,4 @@
-# Smart Password Manager Desktop (C#) <sup>v1.1.0</sup>
+# Smart Password Manager Desktop (C#) <sup>v1.1.1</sup>
 
 **Desktop manager for deterministic smart passwords. Generate, manage, and retrieve passwords without storing them. Your secret phrase never leaves your device.**
 
@@ -122,7 +122,7 @@ SmartPasswordManagerCsharpDesktop.exe
 |----------|---------------------------------------------------------------|
 | Windows  | `%USERPROFILE%\.config\smart_password_manager\passwords.json` |
 
-**Export files** are saved to `%USERPROFILE%\SmartPasswordManager\` with timestamp: `spm_export_20260117_143022.json`
+**Export files** are saved to `%USERPROFILE%\SmartPasswordManager\` with timestamp: `passwords_export_[date].json`
 
 ## Security Requirements
 

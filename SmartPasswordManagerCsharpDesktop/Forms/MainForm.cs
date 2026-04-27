@@ -40,7 +40,7 @@ public partial class MainForm : Form
 
     private void InitializeComponent()
     {
-        this.Text = "Smart Password Manager v1.1.0";
+        this.Text = "Smart Password Manager v1.1.1";
         this.Size = new Size(1100, 750);
         this.StartPosition = FormStartPosition.CenterScreen;
         this.MinimumSize = new Size(800, 600);
@@ -593,32 +593,54 @@ public partial class MainForm : Form
             return;
         }
 
-        var timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-        var filename = $"spm_export_{timestamp}.json";
-        var filepath = Path.Combine(_exportDir, filename);
-
-        try
+        using (var dialog = new SaveFileDialog())
         {
-            var exportData = new Dictionary<string, object>();
-            foreach (var kv in _manager.Passwords)
+            dialog.Title = "Export Passwords";
+            dialog.Filter = "JSON files (*.json)|*.json|All files (*.*)|*.*";
+            dialog.FilterIndex = 1;
+            dialog.DefaultExt = "json";
+            dialog.FileName = $"passwords_export_{DateTime.Now:yyyyMMdd_HHmmss}.json";
+
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                exportData[kv.Key] = new Dictionary<string, object>
+                try
                 {
-                    ["description"] = kv.Value.Description,
-                    ["length"] = kv.Value.Length,
-                    ["public_key"] = kv.Value.PublicKey
-                };
+                    var exportData = new Dictionary<string, object>();
+
+                    exportData["_metadata"] = new Dictionary<string, object>
+                    {
+                        ["exported_at"] = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"),
+                        ["app_name"] = "Smart Password Manager C# Desktop",
+                        ["app_version"] = "v1.1.1",
+                        ["app_type"] = "Desktop",
+                        ["lib_name"] = "smartpasslib-csharp",
+                        ["lib_version"] = "v1.0.3",
+                        ["lib_lang"] = "C#",
+                        ["count"] = _manager.PasswordCount
+                    };
+
+                    foreach (var kv in _manager.Passwords)
+                    {
+                        exportData[kv.Key] = new Dictionary<string, object>
+                        {
+                            ["description"] = kv.Value.Description,
+                            ["length"] = kv.Value.Length,
+                            ["public_key"] = kv.Value.PublicKey
+                        };
+                    }
+
+                    var options = new JsonSerializerOptions { WriteIndented = true };
+                    var json = JsonSerializer.Serialize(exportData, options);
+                    File.WriteAllText(dialog.FileName, json);
+
+                    MessageBox.Show($"Exported {_manager.PasswordCount} passwords to:\n{dialog.FileName}",
+                        "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Export failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
-
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            var json = JsonSerializer.Serialize(exportData, options);
-            File.WriteAllText(filepath, json);
-
-            MessageBox.Show($"Exported {_manager.PasswordCount} passwords to:\n{filepath}", "Export Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Export failed: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
         }
     }
 
@@ -643,6 +665,11 @@ public partial class MainForm : Form
                         return;
                     }
 
+                    if (data.ContainsKey("_metadata"))
+                    {
+                        data.Remove("_metadata");
+                    }
+
                     int imported = 0;
                     int skipped = 0;
 
@@ -652,7 +679,7 @@ public partial class MainForm : Form
                         var description = kv.Value.GetProperty("description").GetString();
                         var length = kv.Value.GetProperty("length").GetInt32();
 
-                        if (publicKey == null || description == null)
+                        if (string.IsNullOrEmpty(publicKey) || string.IsNullOrEmpty(description))
                         {
                             skipped++;
                             continue;
@@ -671,7 +698,18 @@ public partial class MainForm : Form
                     }
 
                     LoadPasswords();
-                    MessageBox.Show($"Import completed!\nImported: {imported}\nSkipped (duplicates): {skipped}", "Import Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    string message = $"Import completed:\n• Added: {imported} new passwords\n• Skipped: {skipped} entries";
+                    if (imported > 0)
+                    {
+                        message += "\n\nRefresh the main window to see new passwords.";
+                    }
+
+                    MessageBox.Show(message, "Import Successful", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (JsonException)
+                {
+                    MessageBox.Show("Invalid JSON file format.", "Import Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -769,7 +807,7 @@ public partial class MainForm : Form
 "  Ctrl + D     →  Show disclaimer\n" +
 "  Ctrl + L     →  Show license\n" +
 "  Ctrl + A     →  Show about\n" +
-"  Alt + F4     →  Exit\n" +
+"  Ctrl + Q     →  Exit\n" +
 "  Delete       →  Delete selected password\n" +
 "  F5           →  Refresh list\n" +
 "  F1           →  Show this help\n" +
@@ -780,7 +818,7 @@ public partial class MainForm : Form
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
 "  🐧 Linux:   ~/.config/smart_password_manager/passwords.json\n" +
 "  🪟 Windows: %USERPROFILE%\\.config\\smart_password_manager\\passwords.json\n" +
-"  📦 Exports: ~/SmartPasswordManager/spm_export_*.json\n\n" +
+"  📦 Exports: ~/SmartPasswordManager/passwords_export_[date]*.json\n\n" +
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
 "  REQUIREMENTS\n" +
@@ -799,7 +837,7 @@ public partial class MainForm : Form
 "  • Use emoji or non-Latin characters for stronger secrets\n\n" +
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
-"  Version v1.1.0 | Copyright © 2026 Alexander Suvorov\n" +
+"  Version v1.1.1 | Copyright © 2026 Alexander Suvorov\n" +
 "  Licensed under BSD 3-Clause License\n" +
 "══════════════════════════════════════════════════════════════════════════════";
     }
@@ -904,7 +942,7 @@ public partial class MainForm : Form
 "RESERVATION OR EXCEPTION.\n\n" +
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
-"  Version v1.1.0 | Copyright © 2026 Alexander Suvorov\n" +
+"  Version v1.1.1 | Copyright © 2026 Alexander Suvorov\n" +
 "══════════════════════════════════════════════════════════════════════════════";
     }
 
@@ -949,7 +987,7 @@ public partial class MainForm : Form
 "POSSIBILITY OF SUCH DAMAGE.\n\n" +
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
-"  Version v1.1.0 | Copyright © 2026 Alexander Suvorov\n" +
+"  Version v1.1.1 | Copyright © 2026 Alexander Suvorov\n" +
 "══════════════════════════════════════════════════════════════════════════════";
     }
 
