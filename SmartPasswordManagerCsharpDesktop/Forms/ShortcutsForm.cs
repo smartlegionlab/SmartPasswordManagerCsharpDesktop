@@ -72,6 +72,7 @@ public partial class ShortcutsForm : Form
         listBox.Items.Add("Ctrl + X     →  Export passwords");
         listBox.Items.Add("Ctrl + F     →  Focus search box");
         listBox.Items.Add("Ctrl + /     →  Show this shortcuts");
+        listBox.Items.Add("Ctrl + Shift + S →  Create desktop shortcut");
         listBox.Items.Add("Delete       →  Delete selected password");
         listBox.Items.Add("F5           →  Refresh list");
         listBox.Items.Add("F1           →  Show help");

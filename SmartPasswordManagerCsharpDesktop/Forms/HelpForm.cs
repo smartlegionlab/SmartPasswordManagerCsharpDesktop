@@ -89,6 +89,7 @@ public partial class HelpForm : Form
 "  Ctrl + X     →  Export passwords\n" +
 "  Ctrl + F     →  Focus search box\n" +
 "  Ctrl + /     →  Show shortcuts\n" +
+"  Ctrl + Shift + S →  Create desktop shortcut\n" +
 "  Delete       →  Delete selected password\n" +
 "  F5           →  Refresh list\n" +
 "  F1           →  Show this help\n" +
@@ -118,7 +119,7 @@ public partial class HelpForm : Form
 "  • Use emoji or non-Latin characters for stronger secrets\n\n" +
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
-"  Version 1.0.1 | Copyright © 2026 Alexander Suvorov\n" +
+"  Version 1.0.2 | Copyright © 2026 Alexander Suvorov\n" +
 "  Licensed under BSD 3-Clause License\n" +
 "══════════════════════════════════════════════════════════════════════════════";
 

@@ -1,4 +1,4 @@
-# Smart Password Manager Desktop (C#) <sup>v1.0.1</sup>
+# Smart Password Manager Desktop (C#) <sup>v1.0.2</sup>
 
 **Desktop manager for deterministic smart passwords. Generate, manage, and retrieve passwords without storing them. Your secret phrase never leaves your device.**
 
@@ -93,23 +93,24 @@ SmartPasswordManagerCsharpDesktop.exe
 
 ### Main Interface
 
-![Main Interface](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/raw/master/data/images/smart_password_manager-win_desktop.png)
+![Main Interface](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/raw/master/data/images/smart-password-manager-win-desktop.png)
 
 ### Keyboard Shortcuts
 
-| Shortcut   | Action                            |
-|------------|-----------------------------------|
-| `Ctrl+N`   | Add new password                  |
-| `Ctrl+E`   | Edit selected                     |
-| `Ctrl+G`   | Get password                      |
-| `Ctrl+I`   | Import passwords                  |
-| `Ctrl+X`   | Export passwords                  |
-| `Ctrl+F`   | Focus search box                  |
-| `Ctrl+/`   | Show shortcuts                    |
-| `Delete`   | Delete selected                   |
-| `F5`       | Refresh list                      |
-| `F1`       | Show help                         |
-| `Enter`    | Get password (when item selected) |
+| Shortcut       | Action                            |
+|----------------|-----------------------------------|
+| `Ctrl+N`       | Add new password                  |
+| `Ctrl+E`       | Edit selected                     |
+| `Ctrl+G`       | Get password                      |
+| `Ctrl+I`       | Import passwords                  |
+| `Ctrl+X`       | Export passwords                  |
+| `Ctrl+F`       | Focus search box                  |
+| `Ctrl+/`       | Show shortcuts                    |
+| `Ctrl+Shift+S` | Create desktop shortcut           |
+| `Delete`       | Delete selected                   |
+| `F5`           | Refresh list                      |
+| `F1`           | Show help                         |
+| `Enter`        | Get password (when item selected) |
 
 ## Storage Locations
 

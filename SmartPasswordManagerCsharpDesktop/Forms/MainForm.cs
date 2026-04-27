@@ -1,6 +1,7 @@
 using SmartLegionLab.SmartPasswordLib;
 using System.Diagnostics;
 using System.Text.Json;
+using SmartPasswordManagerCsharpDesktop.Helpers;
 
 namespace SmartPasswordManagerCsharpDesktop.Forms;
 
@@ -39,7 +40,7 @@ public partial class MainForm : Form
 
     private void InitializeComponent()
     {
-        this.Text = "Smart Password Manager v1.0.1";
+        this.Text = "Smart Password Manager v1.0.2";
         this.Size = new Size(1100, 750);
         this.StartPosition = FormStartPosition.CenterScreen;
         this.MinimumSize = new Size(800, 600);
@@ -71,30 +72,80 @@ public partial class MainForm : Form
         _menuStrip.RenderMode = ToolStripRenderMode.System;
 
         var fileMenu = new ToolStripMenuItem("File");
-        fileMenu.DropDownItems.Add("Export", null, (s, e) => ExportPasswords());
-        fileMenu.DropDownItems.Add("Import", null, (s, e) => ImportPasswords());
+        var exportItem = new ToolStripMenuItem("Export", null, (s, e) => ExportPasswords());
+        exportItem.ShortcutKeys = Keys.Control | Keys.X;
+        exportItem.ShowShortcutKeys = true;
+        fileMenu.DropDownItems.Add(exportItem);
+
+        var importItem = new ToolStripMenuItem("Import", null, (s, e) => ImportPasswords());
+        importItem.ShortcutKeys = Keys.Control | Keys.I;
+        importItem.ShowShortcutKeys = true;
+        fileMenu.DropDownItems.Add(importItem);
+
         fileMenu.DropDownItems.Add(new ToolStripSeparator());
-        fileMenu.DropDownItems.Add("Exit", null, (s, e) => Application.Exit());
+
+        var exitItem = new ToolStripMenuItem("Exit", null, (s, e) => Application.Exit());
+        fileMenu.DropDownItems.Add(exitItem);
 
         var passwordsMenu = new ToolStripMenuItem("Passwords");
-        passwordsMenu.DropDownItems.Add("Add", null, (s, e) => AddPassword());
-        passwordsMenu.DropDownItems.Add("Edit", null, (s, e) => EditPassword());
-        passwordsMenu.DropDownItems.Add("Get Password", null, (s, e) => GetPassword());
+
+        var addItem = new ToolStripMenuItem("Add", null, (s, e) => AddPassword());
+        addItem.ShortcutKeys = Keys.Control | Keys.N;
+        addItem.ShowShortcutKeys = true;
+        passwordsMenu.DropDownItems.Add(addItem);
+
+        var editItem = new ToolStripMenuItem("Edit", null, (s, e) => EditPassword());
+        editItem.ShortcutKeys = Keys.Control | Keys.E;
+        editItem.ShowShortcutKeys = true;
+        passwordsMenu.DropDownItems.Add(editItem);
+
+        var getItem = new ToolStripMenuItem("Get Password", null, (s, e) => GetPassword());
+        getItem.ShortcutKeys = Keys.Control | Keys.G;
+        getItem.ShowShortcutKeys = true;
+        passwordsMenu.DropDownItems.Add(getItem);
+
         passwordsMenu.DropDownItems.Add(new ToolStripSeparator());
-        passwordsMenu.DropDownItems.Add("Delete", null, (s, e) => DeletePassword());
+
+        var deleteItem = new ToolStripMenuItem("Delete", null, (s, e) => DeletePassword());
+        deleteItem.ShortcutKeys = Keys.Delete;
+        deleteItem.ShowShortcutKeys = true;
+        passwordsMenu.DropDownItems.Add(deleteItem);
+
         passwordsMenu.DropDownItems.Add(new ToolStripSeparator());
-        passwordsMenu.DropDownItems.Add("Refresh", null, (s, e) => LoadPasswords());
+
+        var refreshItem = new ToolStripMenuItem("Refresh", null, (s, e) => LoadPasswords());
+        refreshItem.ShortcutKeys = Keys.F5;
+        refreshItem.ShowShortcutKeys = true;
+        passwordsMenu.DropDownItems.Add(refreshItem);
 
         var helpMenu = new ToolStripMenuItem("Help");
-        helpMenu.DropDownItems.Add("📖 Help", null, (s, e) => ShowHelp());
-        helpMenu.DropDownItems.Add("⌨️ Shortcuts", null, (s, e) => ShowShortcuts());
+
+        var helpItem = new ToolStripMenuItem("📖 Help", null, (s, e) => ShowHelp());
+        helpItem.ShortcutKeys = Keys.F1;
+        helpItem.ShowShortcutKeys = true;
+        helpMenu.DropDownItems.Add(helpItem);
+
+        var shortcutsItem = new ToolStripMenuItem("⌨️ Shortcuts", null, (s, e) => ShowShortcuts());
+        shortcutsItem.ShortcutKeys = Keys.Control | Keys.OemQuestion;
+        shortcutsItem.ShortcutKeyDisplayString = "Ctrl+/";
+        shortcutsItem.ShowShortcutKeys = true;
+        helpMenu.DropDownItems.Add(shortcutsItem);
+
         helpMenu.DropDownItems.Add(new ToolStripSeparator());
         helpMenu.DropDownItems.Add("⚠️ Disclaimer", null, (s, e) => OpenDisclaimer());
         helpMenu.DropDownItems.Add(new ToolStripSeparator());
         helpMenu.DropDownItems.Add("ℹ️ About", null, (s, e) => ShowAbout());
 
+        var toolsMenu = new ToolStripMenuItem("Tools");
+
+        var createShortcutItem = new ToolStripMenuItem("Create Desktop Shortcut", null, (s, e) => CreateDesktopShortcut());
+        createShortcutItem.ShortcutKeys = Keys.Control | Keys.Shift | Keys.S;
+        createShortcutItem.ShowShortcutKeys = true;
+        toolsMenu.DropDownItems.Add(createShortcutItem);
+
         _menuStrip.Items.Add(fileMenu);
         _menuStrip.Items.Add(passwordsMenu);
+        _menuStrip.Items.Add(toolsMenu);
         _menuStrip.Items.Add(helpMenu);
 
         _headerPanel = new Panel
@@ -266,7 +317,6 @@ public partial class MainForm : Form
 
         _listView.DoubleClick += (s, e) => GetPassword();
 
-
         _listView.KeyDown += (s, e) =>
         {
             if (e.KeyCode == Keys.Enter && _listView.SelectedItems.Count > 0)
@@ -311,6 +361,22 @@ public partial class MainForm : Form
 
         this.Controls.Add(_mainLayout);
         this.Controls.Add(_statusStrip);
+
+        try
+        {
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            using (var stream = assembly.GetManifestResourceStream("SmartPasswordManagerCsharpDesktop.app.ico"))
+            {
+                if (stream != null)
+                {
+                    this.Icon = new Icon(stream);
+                }
+            }
+        }
+        catch
+        {
+            this.Icon = SystemIcons.Shield;
+        }
     }
 
     private void ApplyFilter()
@@ -650,34 +716,14 @@ public partial class MainForm : Form
         }
     }
 
+    private void CreateDesktopShortcut()
+    {
+        ShellShortcut.CreateDesktopShortcut();
+    }
+
     private void MainForm_KeyDown(object? sender, KeyEventArgs e)
     {
-        if (e.Control && e.KeyCode == Keys.N)
-        {
-            AddPassword();
-            e.Handled = true;
-        }
-        else if (e.Control && e.KeyCode == Keys.E)
-        {
-            EditPassword();
-            e.Handled = true;
-        }
-        else if (e.Control && e.KeyCode == Keys.G)
-        {
-            GetPassword();
-            e.Handled = true;
-        }
-        else if (e.Control && e.KeyCode == Keys.I)
-        {
-            ImportPasswords();
-            e.Handled = true;
-        }
-        else if (e.Control && e.KeyCode == Keys.X)
-        {
-            ExportPasswords();
-            e.Handled = true;
-        }
-        else if (e.Control && e.KeyCode == Keys.F)
+        if (e.Control && e.KeyCode == Keys.F)
         {
             _searchBox.Focus();
             e.Handled = true;
@@ -687,19 +733,9 @@ public partial class MainForm : Form
             ShowShortcuts();
             e.Handled = true;
         }
-        else if (e.KeyCode == Keys.Delete)
+        else if (e.Control && e.Shift && e.KeyCode == Keys.S)
         {
-            DeletePassword();
-            e.Handled = true;
-        }
-        else if (e.KeyCode == Keys.F5)
-        {
-            LoadPasswords();
-            e.Handled = true;
-        }
-        else if (e.KeyCode == Keys.F1)
-        {
-            ShowHelp();
+            CreateDesktopShortcut();
             e.Handled = true;
         }
     }
