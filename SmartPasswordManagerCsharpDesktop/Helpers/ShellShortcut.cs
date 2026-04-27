@@ -30,7 +30,7 @@ namespace SmartPasswordManagerCsharpDesktop.Helpers
                 dynamic shortcut = shell.CreateShortcut(shortcutPath);
                 shortcut.TargetPath = targetPath;
                 shortcut.WorkingDirectory = Path.GetDirectoryName(targetPath);
-                shortcut.Description = "Smart Password Manager";
+                shortcut.Description = "Smart Password Manager. Desktop manager for deterministic smart passwords. Generate, manage, and retrieve passwords without storing them. Your secret phrase never leaves your device.";
                 shortcut.IconLocation = targetPath + ", 0";
                 shortcut.Save();
 

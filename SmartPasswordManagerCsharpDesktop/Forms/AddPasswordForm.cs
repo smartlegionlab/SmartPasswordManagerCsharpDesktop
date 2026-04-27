@@ -88,93 +88,42 @@ public partial class AddPasswordForm : Form
     private void InitializeComponent()
     {
         this.Text = "Add Smart Password";
-        this.Size = new Size(550, 420);
+        this.Size = new Size(560, 460);
         this.StartPosition = FormStartPosition.CenterParent;
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
         this.MinimizeBox = false;
-        this.BackColor = Color.FromArgb(28, 28, 35);
+        this.BackColor = Color.FromArgb(32, 32, 38);
         this.ForeColor = Color.FromArgb(220, 220, 230);
 
-        var layout = new TableLayoutPanel
+        var mainContainer = new Panel
         {
             Dock = DockStyle.Fill,
-            Padding = new Padding(25),
-            ColumnCount = 2,
-            RowCount = 7
+            Padding = new Padding(24),
+            BackColor = Color.FromArgb(32, 32, 38)
         };
-        layout.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120));
-        layout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
 
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
-
-        var descLabel = new Label
-        {
-            Text = "Description:",
-            TextAlign = ContentAlignment.MiddleRight,
-            ForeColor = Color.FromArgb(0, 122, 204),
-            Font = new Font("Segoe UI", 10, FontStyle.Bold),
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(descLabel, 0, 0);
-
-        _descriptionBox = new TextBox
+        var flowLayout = new FlowLayoutPanel
         {
             Dock = DockStyle.Fill,
-            BackColor = Color.FromArgb(40, 40, 48),
-            ForeColor = Color.FromArgb(220, 220, 230),
-            BorderStyle = BorderStyle.FixedSingle,
-            Font = new Font("Segoe UI", 10)
-        };
-        layout.Controls.Add(_descriptionBox, 1, 0);
-
-        var secretLabel = new Label
-        {
-            Text = "Secret phrase:",
-            TextAlign = ContentAlignment.MiddleRight,
-            ForeColor = Color.FromArgb(0, 122, 204),
-            Font = new Font("Segoe UI", 10, FontStyle.Bold),
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(secretLabel, 0, 1);
-
-        var secretPanel = new TableLayoutPanel
-        {
-            ColumnCount = 2,
-            Dock = DockStyle.Fill,
-            Padding = new Padding(0),
-            Margin = new Padding(0)
-        };
-        secretPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100));
-        secretPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 80));
-
-        _secretBox = new TextBox
-        {
-            Dock = DockStyle.Fill,
-            BackColor = Color.FromArgb(40, 40, 48),
-            ForeColor = Color.FromArgb(220, 220, 230),
-            BorderStyle = BorderStyle.FixedSingle,
-            UseSystemPasswordChar = true,
-            Font = new Font("Segoe UI", 10)
+            FlowDirection = FlowDirection.TopDown,
+            WrapContents = false,
+            BackColor = Color.FromArgb(32, 32, 38)
         };
 
-        _showHideButton = new Button
-        {
-            Text = "Show",
-            Dock = DockStyle.Fill,
-            FlatStyle = FlatStyle.Flat,
-            BackColor = Color.FromArgb(60, 60, 68),
-            ForeColor = Color.FromArgb(220, 220, 230),
-            Font = new Font("Segoe UI", 10, FontStyle.Bold),
-            Cursor = Cursors.Hand,
-            TextAlign = ContentAlignment.MiddleCenter
-        };
+        var descPanel = new Panel { Width = 500, Height = 70, Margin = new Padding(0, 0, 0, 8), BackColor = Color.FromArgb(32, 32, 38) };
+        var descLabel = new Label { Text = "Description", Location = new Point(0, 0), Size = new Size(500, 25), ForeColor = Color.FromArgb(0, 122, 204), Font = new Font("Segoe UI", 10, FontStyle.Bold) };
+        _descriptionBox = new TextBox { Location = new Point(0, 28), Size = new Size(500, 32), BackColor = Color.FromArgb(45, 45, 52), ForeColor = Color.FromArgb(220, 220, 230), BorderStyle = BorderStyle.FixedSingle, Font = new Font("Segoe UI", 11) };
+        descPanel.Controls.Add(descLabel);
+        descPanel.Controls.Add(_descriptionBox);
+        flowLayout.Controls.Add(descPanel);
+
+        var secretPanel = new Panel { Width = 500, Height = 70, Margin = new Padding(0, 0, 0, 8), BackColor = Color.FromArgb(32, 32, 38) };
+        var secretLabel = new Label { Text = "Secret phrase", Location = new Point(0, 0), Size = new Size(500, 25), ForeColor = Color.FromArgb(0, 122, 204), Font = new Font("Segoe UI", 10, FontStyle.Bold) };
+
+        var secretInputPanel = new Panel { Location = new Point(0, 28), Size = new Size(500, 32), BackColor = Color.FromArgb(45, 45, 52) };
+        _secretBox = new TextBox { Location = new Point(1, 1), Size = new Size(415, 30), BackColor = Color.FromArgb(45, 45, 52), ForeColor = Color.FromArgb(220, 220, 230), BorderStyle = BorderStyle.None, UseSystemPasswordChar = true, Font = new Font("Segoe UI", 11) };
+        _showHideButton = new Button { Text = "Show", Location = new Point(422, 1), Size = new Size(77, 30), FlatStyle = FlatStyle.Flat, BackColor = Color.FromArgb(60, 60, 68), ForeColor = Color.FromArgb(220, 220, 230), Font = new Font("Segoe UI", 9, FontStyle.Bold), Cursor = Cursors.Hand };
         _showHideButton.FlatAppearance.BorderSize = 0;
         _showHideButton.Click += (s, e) =>
         {
@@ -183,101 +132,40 @@ public partial class AddPasswordForm : Form
             _showHideButton.Text = _isPasswordVisible ? "Hide" : "Show";
             _showHideButton.BackColor = _isPasswordVisible ? Color.FromArgb(0, 122, 204) : Color.FromArgb(60, 60, 68);
         };
+        secretInputPanel.Controls.Add(_secretBox);
+        secretInputPanel.Controls.Add(_showHideButton);
+        secretPanel.Controls.Add(secretLabel);
+        secretPanel.Controls.Add(secretInputPanel);
+        flowLayout.Controls.Add(secretPanel);
 
-        secretPanel.Controls.Add(_secretBox, 0, 0);
-        secretPanel.Controls.Add(_showHideButton, 1, 0);
-        layout.Controls.Add(secretPanel, 1, 1);
+        var strengthPanel = new Panel { Width = 500, Height = 35, Margin = new Padding(0, 0, 0, 4), BackColor = Color.FromArgb(32, 32, 38) };
+        _strengthLabel = new Label { Text = "⚪ Enter secret phrase", Location = new Point(0, 5), Size = new Size(500, 25), ForeColor = Color.FromArgb(160, 160, 170), Font = new Font("Segoe UI", 9, FontStyle.Bold), TextAlign = ContentAlignment.MiddleLeft };
+        strengthPanel.Controls.Add(_strengthLabel);
+        flowLayout.Controls.Add(strengthPanel);
 
-        _strengthLabel = new Label
-        {
-            Text = "⚪ Enter secret phrase",
-            ForeColor = Color.FromArgb(160, 160, 170),
-            Font = new Font("Segoe UI", 9, FontStyle.Bold),
-            Dock = DockStyle.Fill,
-            TextAlign = ContentAlignment.MiddleLeft
-        };
-        layout.Controls.Add(_strengthLabel, 1, 2);
+        var tipsPanel = new Panel { Width = 500, Height = 35, Margin = new Padding(0, 0, 0, 12), BackColor = Color.FromArgb(32, 32, 38) };
+        var tipsLabel = new Label { Text = "💡 Use mixed case, numbers, symbols, or emoji (12+ chars minimum)", Location = new Point(0, 5), Size = new Size(500, 25), ForeColor = Color.FromArgb(108, 117, 125), Font = new Font("Segoe UI", 8.5f, FontStyle.Italic), TextAlign = ContentAlignment.MiddleLeft };
+        tipsPanel.Controls.Add(tipsLabel);
+        flowLayout.Controls.Add(tipsPanel);
 
-        var tipsLabel = new Label
-        {
-            Text = "💡 Use mixed case, numbers, symbols, or emoji (12+ chars minimum)",
-            ForeColor = Color.FromArgb(108, 117, 125),
-            Font = new Font("Segoe UI", 8, FontStyle.Italic),
-            Dock = DockStyle.Fill,
-            TextAlign = ContentAlignment.MiddleLeft
-        };
-        layout.Controls.Add(tipsLabel, 1, 3);
+        var lengthPanel = new Panel { Width = 500, Height = 70, Margin = new Padding(0, 0, 0, 20), BackColor = Color.FromArgb(32, 32, 38) };
+        var lengthLabel = new Label { Text = "Password length", Location = new Point(0, 0), Size = new Size(500, 25), ForeColor = Color.FromArgb(0, 122, 204), Font = new Font("Segoe UI", 10, FontStyle.Bold) };
+        _lengthBox = new NumericUpDown { Location = new Point(0, 28), Size = new Size(120, 32), BackColor = Color.FromArgb(45, 45, 52), ForeColor = Color.FromArgb(220, 220, 230), BorderStyle = BorderStyle.FixedSingle, Font = new Font("Segoe UI", 11), Minimum = 12, Maximum = 100, Value = 16, TextAlign = HorizontalAlignment.Center };
+        lengthPanel.Controls.Add(lengthLabel);
+        lengthPanel.Controls.Add(_lengthBox);
+        flowLayout.Controls.Add(lengthPanel);
 
-        var lengthLabel = new Label
-        {
-            Text = "Password length:",
-            TextAlign = ContentAlignment.MiddleRight,
-            ForeColor = Color.FromArgb(0, 122, 204),
-            Font = new Font("Segoe UI", 10, FontStyle.Bold),
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(lengthLabel, 0, 4);
-
-        _lengthBox = new NumericUpDown
-        {
-            Minimum = 12,
-            Maximum = 100,
-            Value = 16,
-            Dock = DockStyle.Fill,
-            BackColor = Color.FromArgb(40, 40, 48),
-            ForeColor = Color.FromArgb(220, 220, 230),
-            BorderStyle = BorderStyle.FixedSingle,
-            Font = new Font("Segoe UI", 10)
-        };
-        layout.Controls.Add(_lengthBox, 1, 4);
-
-        var spacerLabel = new Label
-        {
-            Dock = DockStyle.Fill,
-            Text = ""
-        };
-        layout.Controls.Add(spacerLabel, 0, 5);
-        layout.SetColumnSpan(spacerLabel, 2);
-
-        var buttonPanel = new FlowLayoutPanel
-        {
-            Dock = DockStyle.Fill,
-            FlowDirection = FlowDirection.RightToLeft,
-            Padding = new Padding(0),
-            Margin = new Padding(0)
-        };
-
-        _okButton = new Button
-        {
-            Text = "Add",
-            BackColor = Color.FromArgb(0, 122, 204),
-            ForeColor = Color.White,
-            FlatStyle = FlatStyle.Flat,
-            Size = new Size(110, 38),
-            Font = new Font("Segoe UI", 10, FontStyle.Bold),
-            DialogResult = DialogResult.OK,
-            Cursor = Cursors.Hand
-        };
-        _okButton.FlatAppearance.BorderSize = 0;
-
-        _cancelButton = new Button
-        {
-            Text = "Cancel",
-            BackColor = Color.FromArgb(60, 60, 68),
-            ForeColor = Color.FromArgb(220, 220, 230),
-            FlatStyle = FlatStyle.Flat,
-            Size = new Size(110, 38),
-            Font = new Font("Segoe UI", 10),
-            DialogResult = DialogResult.Cancel,
-            Cursor = Cursors.Hand
-        };
+        var buttonPanel = new Panel { Width = 500, Height = 50, Margin = new Padding(0, 0, 0, 0), BackColor = Color.FromArgb(32, 32, 38) };
+        _cancelButton = new Button { Text = "Cancel", Location = new Point(290, 5), Size = new Size(100, 42), FlatStyle = FlatStyle.Flat, BackColor = Color.FromArgb(60, 60, 68), ForeColor = Color.FromArgb(220, 220, 230), Font = new Font("Segoe UI", 10), DialogResult = DialogResult.Cancel, Cursor = Cursors.Hand };
         _cancelButton.FlatAppearance.BorderSize = 0;
-
-        buttonPanel.Controls.Add(_okButton);
+        _okButton = new Button { Text = "Add Password", Location = new Point(395, 5), Size = new Size(105, 42), FlatStyle = FlatStyle.Flat, BackColor = Color.FromArgb(0, 122, 204), ForeColor = Color.White, Font = new Font("Segoe UI", 10, FontStyle.Bold), DialogResult = DialogResult.OK, Cursor = Cursors.Hand };
+        _okButton.FlatAppearance.BorderSize = 0;
         buttonPanel.Controls.Add(_cancelButton);
-        layout.Controls.Add(buttonPanel, 1, 6);
+        buttonPanel.Controls.Add(_okButton);
+        flowLayout.Controls.Add(buttonPanel);
 
-        this.Controls.Add(layout);
+        mainContainer.Controls.Add(flowLayout);
+        this.Controls.Add(mainContainer);
 
         _okButton.Click += (s, e) =>
         {

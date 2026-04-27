@@ -40,7 +40,7 @@ public partial class MainForm : Form
 
     private void InitializeComponent()
     {
-        this.Text = "Smart Password Manager v1.0.2";
+        this.Text = "Smart Password Manager v1.1.0";
         this.Size = new Size(1100, 750);
         this.StartPosition = FormStartPosition.CenterScreen;
         this.MinimumSize = new Size(800, 600);
@@ -72,6 +72,7 @@ public partial class MainForm : Form
         _menuStrip.RenderMode = ToolStripRenderMode.System;
 
         var fileMenu = new ToolStripMenuItem("File");
+
         var exportItem = new ToolStripMenuItem("Export", null, (s, e) => ExportPasswords());
         exportItem.ShortcutKeys = Keys.Control | Keys.X;
         exportItem.ShowShortcutKeys = true;
@@ -85,6 +86,8 @@ public partial class MainForm : Form
         fileMenu.DropDownItems.Add(new ToolStripSeparator());
 
         var exitItem = new ToolStripMenuItem("Exit", null, (s, e) => Application.Exit());
+        exitItem.ShortcutKeys = Keys.Control | Keys.Q;
+        exitItem.ShowShortcutKeys = true;
         fileMenu.DropDownItems.Add(exitItem);
 
         var passwordsMenu = new ToolStripMenuItem("Passwords");
@@ -132,9 +135,23 @@ public partial class MainForm : Form
         helpMenu.DropDownItems.Add(shortcutsItem);
 
         helpMenu.DropDownItems.Add(new ToolStripSeparator());
-        helpMenu.DropDownItems.Add("⚠️ Disclaimer", null, (s, e) => OpenDisclaimer());
+
+        var disclaimerItem = new ToolStripMenuItem("⚠️ Disclaimer", null, (s, e) => ShowDisclaimer());
+        disclaimerItem.ShortcutKeys = Keys.Control | Keys.D;
+        disclaimerItem.ShowShortcutKeys = true;
+        helpMenu.DropDownItems.Add(disclaimerItem);
+
+        var licenseItem = new ToolStripMenuItem("📄 License", null, (s, e) => ShowLicense());
+        licenseItem.ShortcutKeys = Keys.Control | Keys.L;
+        licenseItem.ShowShortcutKeys = true;
+        helpMenu.DropDownItems.Add(licenseItem);
+
         helpMenu.DropDownItems.Add(new ToolStripSeparator());
-        helpMenu.DropDownItems.Add("ℹ️ About", null, (s, e) => ShowAbout());
+
+        var aboutItem = new ToolStripMenuItem("ℹ️ About", null, (s, e) => ShowAbout());
+        aboutItem.ShortcutKeys = Keys.Control | Keys.A;
+        aboutItem.ShowShortcutKeys = true;
+        helpMenu.DropDownItems.Add(aboutItem);
 
         var toolsMenu = new ToolStripMenuItem("Tools");
 
@@ -189,23 +206,8 @@ public partial class MainForm : Form
         btnImport.FlatAppearance.BorderSize = 0;
         btnImport.Click += (s, e) => ImportPasswords();
 
-        var btnExport = new Button { Text = "📤 Export", BackColor = Color.FromArgb(108, 117, 125), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(235, 10), Cursor = Cursors.Hand };
-        btnExport.FlatAppearance.BorderSize = 0;
-        btnExport.Click += (s, e) => ExportPasswords();
-
-        var btnRefresh = new Button { Text = "⟳ Refresh", BackColor = Color.FromArgb(52, 58, 64), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(345, 10), Cursor = Cursors.Hand };
-        btnRefresh.FlatAppearance.BorderSize = 0;
-        btnRefresh.Click += (s, e) => LoadPasswords();
-
-        var btnAbout = new Button { Text = "ℹ️ About", BackColor = Color.FromArgb(111, 66, 193), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(455, 10), Cursor = Cursors.Hand };
-        btnAbout.FlatAppearance.BorderSize = 0;
-        btnAbout.Click += (s, e) => ShowAbout();
-
         _topButtonPanel.Controls.Add(btnAdd);
         _topButtonPanel.Controls.Add(btnImport);
-        _topButtonPanel.Controls.Add(btnExport);
-        _topButtonPanel.Controls.Add(btnRefresh);
-        _topButtonPanel.Controls.Add(btnAbout);
 
         var searchPanel = new Panel
         {
@@ -286,14 +288,14 @@ public partial class MainForm : Form
         btnDelete.FlatAppearance.BorderSize = 0;
         btnDelete.Click += (s, e) => DeletePassword();
 
-        var btnHelp = new Button { Text = "❓ Help", BackColor = Color.FromArgb(111, 66, 193), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(345, 10), Cursor = Cursors.Hand };
-        btnHelp.FlatAppearance.BorderSize = 0;
-        btnHelp.Click += (s, e) => ShowHelp();
+        var btnExport = new Button { Text = "📤 Export", BackColor = Color.FromArgb(108, 117, 125), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(345, 10), Cursor = Cursors.Hand };
+        btnExport.FlatAppearance.BorderSize = 0;
+        btnExport.Click += (s, e) => ExportPasswords();
 
         _bottomButtonPanel.Controls.Add(btnGet);
         _bottomButtonPanel.Controls.Add(btnEdit);
         _bottomButtonPanel.Controls.Add(btnDelete);
-        _bottomButtonPanel.Controls.Add(btnHelp);
+        _bottomButtonPanel.Controls.Add(btnExport);
 
         _listView = new ListView
         {
@@ -559,7 +561,7 @@ public partial class MainForm : Form
             return;
         }
 
-        using (var dialog = new PasswordInputDialog(currentPassword.Description, currentPassword.Length))
+        using (var dialog = new GetPasswordForm(currentPassword.Description, currentPassword.Length))
         {
             if (dialog.ShowDialog() == DialogResult.OK)
             {
@@ -681,9 +683,25 @@ public partial class MainForm : Form
 
     private void ShowHelp()
     {
-        using (var helpForm = new HelpForm())
+        using (var form = new GenericInfoForm("Help - Smart Password Manager", GetHelpText()))
         {
-            helpForm.ShowDialog();
+            form.ShowDialog();
+        }
+    }
+
+    private void ShowDisclaimer()
+    {
+        using (var form = new GenericInfoForm("Disclaimer", GetDisclaimerText()))
+        {
+            form.ShowDialog();
+        }
+    }
+
+    private void ShowLicense()
+    {
+        using (var form = new GenericInfoForm("License - BSD 3-Clause", GetLicenseText()))
+        {
+            form.ShowDialog();
         }
     }
 
@@ -697,15 +715,7 @@ public partial class MainForm : Form
 
     private void OpenDisclaimer()
     {
-        try
-        {
-            Process.Start(new ProcessStartInfo("https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/blob/master/DISCLAIMER.md")
-            { UseShellExecute = true });
-        }
-        catch (Exception ex)
-        {
-            MessageBox.Show($"Cannot open disclaimer: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        }
+        ShowDisclaimer();
     }
 
     private void ShowAbout()
@@ -714,6 +724,233 @@ public partial class MainForm : Form
         {
             aboutForm.ShowDialog();
         }
+    }
+
+    private string GetHelpText()
+    {
+        return
+"══════════════════════════════════════════════════════════════════════════════\n" +
+"  SMART PASSWORD MANAGER\n" +
+"══════════════════════════════════════════════════════════════════════════════\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  HOW IT WORKS\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+"  • Add a password entry with description and secret phrase\n" +
+"  • System generates a public key from your secret\n" +
+"  • Password is generated deterministically from your secret\n" +
+"  • Same secret + same length = same password every time\n\n" +
+
+"  To retrieve a password:\n" +
+"  → Select the entry → Click 'Get' → Enter secret phrase\n" +
+"  → Password is copied to clipboard automatically\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  SECURITY NOTES\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+"  ✓ Passwords are NEVER stored anywhere\n" +
+"  ✓ Secret phrase never leaves your device\n" +
+"  ✓ Only metadata (description, length, public key) is stored\n" +
+"  ✓ Lost secret phrase = permanently lost passwords\n" +
+"  ✓ Secret phrase must be at least 12 characters\n" +
+"  ⚠ Never use the description as your secret phrase!\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  KEYBOARD SHORTCUTS\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+"  Ctrl + N     →  Add new password\n" +
+"  Ctrl + E     →  Edit selected password\n" +
+"  Ctrl + G     →  Get password (copy to clipboard)\n" +
+"  Ctrl + I     →  Import passwords\n" +
+"  Ctrl + X     →  Export passwords\n" +
+"  Ctrl + F     →  Focus search box\n" +
+"  Ctrl + /     →  Show shortcuts\n" +
+"  Ctrl + Shift + S →  Create desktop shortcut\n" +
+"  Ctrl + D     →  Show disclaimer\n" +
+"  Ctrl + L     →  Show license\n" +
+"  Ctrl + A     →  Show about\n" +
+"  Alt + F4     →  Exit\n" +
+"  Delete       →  Delete selected password\n" +
+"  F5           →  Refresh list\n" +
+"  F1           →  Show this help\n" +
+"  Enter        →  Get password (when item selected)\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  STORAGE LOCATIONS\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+"  🐧 Linux:   ~/.config/smart_password_manager/passwords.json\n" +
+"  🪟 Windows: %USERPROFILE%\\.config\\smart_password_manager\\passwords.json\n" +
+"  📦 Exports: ~/SmartPasswordManager/spm_export_*.json\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  REQUIREMENTS\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+"  • Secret phrase: Minimum 12 characters\n" +
+"  • Password length: 12-100 characters\n" +
+"  • .NET Runtime: Not required for pre-built binaries\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  PRO TIPS\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+"  • Use different secret phrases for different security levels\n" +
+"  • Backup your passwords.json file regularly\n" +
+"  • Export your metadata to JSON for safekeeping\n" +
+"  • Test new secret phrases before deleting old ones\n" +
+"  • Use emoji or non-Latin characters for stronger secrets\n\n" +
+
+"══════════════════════════════════════════════════════════════════════════════\n" +
+"  Version v1.1.0 | Copyright © 2026 Alexander Suvorov\n" +
+"  Licensed under BSD 3-Clause License\n" +
+"══════════════════════════════════════════════════════════════════════════════";
+    }
+
+    private string GetDisclaimerText()
+    {
+        return
+"══════════════════════════════════════════════════════════════════════════════\n" +
+"  LEGAL DISCLAIMER\n" +
+"══════════════════════════════════════════════════════════════════════════════\n\n" +
+
+"COMPLETE AND ABSOLUTE RELEASE FROM ALL LIABILITY\n\n" +
+
+"SOFTWARE PROVIDED \"AS IS\" WITHOUT ANY WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,\n" +
+"INCLUDING BUT NOT LIMITED TO WARRANTIES OF MERCHANTABILITY, FITNESS FOR A\n" +
+"PARTICULAR PURPOSE, AND NONINFRINGEMENT.\n\n" +
+
+"The copyright holder, contributors, and any associated parties EXPLICITLY\n" +
+"DISCLAIM AND DENY ALL RESPONSIBILITY AND LIABILITY for:\n\n" +
+
+"1. ANY AND ALL DATA LOSS: Complete or partial loss of any data, files,\n" +
+"   configuration, or information whatsoever\n\n" +
+
+"2. ANY AND ALL SECURITY INCIDENTS: Unauthorized access, breaches, compromises,\n" +
+"   theft, or exposure of any sensitive information\n\n" +
+
+"3. ANY AND ALL FINANCIAL LOSSES: Direct, indirect, incidental, special,\n" +
+"   consequential, or punitive damages of any kind\n\n" +
+
+"4. ANY AND ALL OPERATIONAL DISRUPTIONS: Service interruptions, system failures,\n" +
+"   authentication issues, or denial of service\n\n" +
+
+"5. ANY AND ALL IMPLEMENTATION ISSUES: Bugs, errors, vulnerabilities,\n" +
+"   misconfigurations, incorrect usage, or compatibility problems\n\n" +
+
+"6. ANY AND ALL LEGAL OR REGULATORY CONSEQUENCES: Violations of laws,\n" +
+"   regulations, compliance requirements, or third-party terms of service\n\n" +
+
+"7. ANY AND ALL PERSONAL OR BUSINESS DAMAGES: Reputational harm, business\n" +
+"   interruption, loss of revenue, lost profits, or any other damages\n\n" +
+
+"8. ANY AND ALL THIRD-PARTY CLAIMS: Claims made by any other parties affected\n" +
+"   by software usage\n\n" +
+
+"9. ANY AND ALL SYSTEM DAMAGES: Hardware damage, software corruption,\n" +
+"   operating system instability, or data corruption\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  USER ACCEPTS FULL AND UNCONDITIONAL RESPONSIBILITY\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+
+"By installing, accessing, cloning, forking, or using this software in any\n" +
+"manner, you irrevocably agree that:\n\n" +
+
+"- You assume ALL risks associated with software usage\n" +
+"- You bear SOLE responsibility for your data, credentials, and system security\n" +
+"- You accept COMPLETE responsibility for all testing and validation before\n" +
+"  production use\n" +
+"- You are EXCLUSIVELY liable for compliance with all applicable laws and\n" +
+"  regulations\n" +
+"- You accept TOTAL responsibility for any and all consequences of usage\n" +
+"- You PERMANENTLY AND IRREVOCABLY waive, release, and discharge all claims\n" +
+"  against the copyright holder, contributors, distributors, and any associated\n" +
+"  entities\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  NO WARRANTY OF ANY KIND\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+
+"This software comes with ABSOLUTELY NO GUARANTEES regarding:\n\n" +
+
+"- Security effectiveness or cryptographic strength\n" +
+"- Reliability, availability, or uptime\n" +
+"- Fitness for any particular purpose or use case\n" +
+"- Accuracy, correctness, or completeness\n" +
+"- Freedom from defects, vulnerabilities, or backdoors\n" +
+"- Compatibility with any specific hardware, software, or environment\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  NOT A PROFESSIONAL OR CERTIFIED SOLUTION\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+
+"This software is provided for educational and experimental purposes.\n" +
+"It is not:\n\n" +
+
+"- Professional advice or consultation of any kind\n" +
+"- A certified, audited, or validated product\n" +
+"- A guaranteed security solution\n" +
+"- Enterprise-grade or production-ready software\n" +
+"- Endorsed by any authority, organization, or standards body\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  FINAL AND BINDING AGREEMENT\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+
+"Usage of this software constitutes your FULL AND UNCONDITIONAL ACCEPTANCE\n" +
+"of this disclaimer. If you do not accept ALL terms and conditions,\n" +
+"DO NOT USE, CLONE, FORK, OR DOWNLOAD THIS SOFTWARE.\n\n" +
+
+"BY PROCEEDING, YOU ACKNOWLEDGE THAT YOU HAVE READ THIS DISCLAIMER IN ITS\n" +
+"ENTIRETY, UNDERSTAND ITS TERMS COMPLETELY, AND ACCEPT THEM WITHOUT\n" +
+"RESERVATION OR EXCEPTION.\n\n" +
+
+"══════════════════════════════════════════════════════════════════════════════\n" +
+"  Version v1.1.0 | Copyright © 2026 Alexander Suvorov\n" +
+"══════════════════════════════════════════════════════════════════════════════";
+    }
+
+    private string GetLicenseText()
+    {
+        return
+"══════════════════════════════════════════════════════════════════════════════\n" +
+"  BSD 3-CLAUSE LICENSE\n" +
+"══════════════════════════════════════════════════════════════════════════════\n\n" +
+
+"Copyright (c) 2026, Alexander Suvorov\n" +
+"All rights reserved.\n\n" +
+
+"Redistribution and use in source and binary forms, with or without\n" +
+"modification, are permitted provided that the following conditions are met:\n\n" +
+
+"1. Redistributions of source code must retain the above copyright notice,\n" +
+"   this list of conditions and the following disclaimer.\n\n" +
+
+"2. Redistributions in binary form must reproduce the above copyright notice,\n" +
+"   this list of conditions and the following disclaimer in the documentation\n" +
+"   and/or other materials provided with the distribution.\n\n" +
+
+"3. Neither the name of the copyright holder nor the names of its\n" +
+"   contributors may be used to endorse or promote products derived from\n" +
+"   this software without specific prior written permission.\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  DISCLAIMER OF WARRANTY\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+
+"THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS \"AS IS\"\n" +
+"AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE\n" +
+"IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE\n" +
+"ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE\n" +
+"LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR\n" +
+"CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF\n" +
+"SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS\n" +
+"INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN\n" +
+"CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)\n" +
+"ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE\n" +
+"POSSIBILITY OF SUCH DAMAGE.\n\n" +
+
+"══════════════════════════════════════════════════════════════════════════════\n" +
+"  Version v1.1.0 | Copyright © 2026 Alexander Suvorov\n" +
+"══════════════════════════════════════════════════════════════════════════════";
     }
 
     private void CreateDesktopShortcut()
@@ -736,6 +973,26 @@ public partial class MainForm : Form
         else if (e.Control && e.Shift && e.KeyCode == Keys.S)
         {
             CreateDesktopShortcut();
+            e.Handled = true;
+        }
+        else if (e.Control && e.KeyCode == Keys.D)
+        {
+            ShowDisclaimer();
+            e.Handled = true;
+        }
+        else if (e.Control && e.KeyCode == Keys.L)
+        {
+            ShowLicense();
+            e.Handled = true;
+        }
+        else if (e.Control && e.KeyCode == Keys.A)
+        {
+            ShowAbout();
+            e.Handled = true;
+        }
+        else if (e.Control && e.KeyCode == Keys.Q)
+        {
+            Application.Exit();
             e.Handled = true;
         }
     }

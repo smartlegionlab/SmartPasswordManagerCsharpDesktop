@@ -1,4 +1,4 @@
-# Smart Password Manager Desktop (C#) <sup>v1.0.2</sup>
+# Smart Password Manager Desktop (C#) <sup>v1.1.0</sup>
 
 **Desktop manager for deterministic smart passwords. Generate, manage, and retrieve passwords without storing them. Your secret phrase never leaves your device.**
 
@@ -107,6 +107,10 @@ SmartPasswordManagerCsharpDesktop.exe
 | `Ctrl+F`       | Focus search box                  |
 | `Ctrl+/`       | Show shortcuts                    |
 | `Ctrl+Shift+S` | Create desktop shortcut           |
+| `Ctrl+D`       | Show disclaimer                   |
+| `Ctrl+L`       | Show license                      |
+| `Ctrl+A`       | Show about                        |
+| `Ctrl+Q`       | Exit application                  |
 | `Delete`       | Delete selected                   |
 | `F5`           | Refresh list                      |
 | `F1`           | Show help                         |

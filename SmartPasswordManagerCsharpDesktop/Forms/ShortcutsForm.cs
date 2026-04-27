@@ -12,7 +12,7 @@ public partial class ShortcutsForm : Form
     private void InitializeComponent()
     {
         this.Text = "Keyboard Shortcuts";
-        this.Size = new Size(500, 450);
+        this.Size = new Size(550, 520);
         this.StartPosition = FormStartPosition.CenterParent;
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
@@ -73,6 +73,10 @@ public partial class ShortcutsForm : Form
         listBox.Items.Add("Ctrl + F     →  Focus search box");
         listBox.Items.Add("Ctrl + /     →  Show this shortcuts");
         listBox.Items.Add("Ctrl + Shift + S →  Create desktop shortcut");
+        listBox.Items.Add("Ctrl + D     →  Show disclaimer");
+        listBox.Items.Add("Ctrl + L     →  Show license");
+        listBox.Items.Add("Ctrl + A     →  Show about");
+        listBox.Items.Add("Ctrl + Q     →  Exit application");
         listBox.Items.Add("Delete       →  Delete selected password");
         listBox.Items.Add("F5           →  Refresh list");
         listBox.Items.Add("F1           →  Show help");
