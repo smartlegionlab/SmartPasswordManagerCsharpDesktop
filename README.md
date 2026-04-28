@@ -1,6 +1,12 @@
-# Smart Password Manager Desktop (C#) <sup>v1.1.1</sup>
+# Smart Password Manager Desktop (C#) <sup>v1.1.2</sup>
+
+---
 
 **Desktop manager for deterministic smart passwords. Generate, manage, and retrieve passwords without storing them. Your secret phrase never leaves your device.**
+
+**Decentralized by Design**: Unlike traditional password managers that store encrypted vaults on central servers, 
+Smart Password Manager stores nothing. Your secrets never leave your device. Passwords are regenerated on-demand — 
+**no cloud, no database, no trust required**.
 
 ---
 
@@ -9,6 +15,7 @@
 [![GitHub release](https://img.shields.io/github/v/release/smartlegionlab/SmartPasswordManagerCsharpDesktop)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/)
 [![GitHub stars](https://img.shields.io/github/stars/smartlegionlab/SmartPasswordManagerCsharpDesktop?style=social)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/smartlegionlab/SmartPasswordManagerCsharpDesktop?style=social)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/network/members)
+![Platform](https://img.shields.io/badge/platform-windows-lightgrey)
 
 ---
 
@@ -24,14 +31,16 @@
 
 ## Core Principles
 
-- **Zero-Password Storage**: No passwords are ever stored or transmitted
+- **Zero-Storage Security**: No passwords or secret phrases are ever stored or transmitted
+- **Decentralized Architecture**: No central servers, no cloud dependency, no third-party trust required
 - **Deterministic Regeneration**: Passwords are recreated identically from your secret phrase
-- **Metadata Management**: Store only descriptions and verification keys
+- **Metadata Only**: Store only descriptions and verification keys
 - **Client-Side Generation**: All cryptographic operations happen on your device
 - **On-Demand Discovery**: Passwords exist only when you generate them
 
 ## Key Features
 
+- **Decentralized & Serverless**: No central database, no cloud lock-in, complete user sovereignty
 - **Smart Password Generation**: Deterministic from secret phrase
 - **Public/Private Key System**: 30 iterations for private key, 60 for public key
 - **Secret Verification**: Verify secret without exposing it
@@ -46,6 +55,7 @@
 ## Security Model
 
 - **Proof of Knowledge**: Public keys verify secrets without exposing them
+- **Decentralized Trust**: No third party needed — you control your secrets completely
 - **Deterministic Security**: Same secret + length = same password, always
 - **Metadata Separation**: Non-sensitive data stored in JSON file
 - **Local Processing**: Secret and password never leave your device
@@ -64,14 +74,20 @@
 
 Powered by **[smartpasslib-csharp](https://github.com/smartlegionlab/smartpasslib-csharp)** — C# implementation of deterministic password generation.
 
-**Key derivation (same as Python/JS/Kotlin/Go versions):**
+**Key derivation (same as Python/JS/Kotlin/Go/C# versions):**
 
 | Key Type    | Iterations | Purpose                                               |
 |-------------|------------|-------------------------------------------------------|
 | Private Key | 30         | Password generation (never stored, never transmitted) |
-| Public Key  | 60         | Verification (stored on server)                       |
+| Public Key  | 60         | Verification (stored locally)                         |
 
 **Character Set:** `abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$&*-_`
+
+**Decentralized Architecture**:
+- No central authority required
+- Metadata can be synced via any channel
+- Your security depends only on your secret phrase
+- Works offline — no internet connection required
 
 ## Download
 
@@ -135,20 +151,29 @@ SmartPasswordManagerCsharpDesktop.exe
 
 ### Strong Secret Examples
 ```
-✅ "MyCatHippo2026"          — mixed case + numbers
-✅ "P@ssw0rd!LongSecret"     — special chars + numbers + length
-✅ "КотБегемот2026НаДиете"   — Cyrillic + numbers
-✅ "GitHubPersonal2026!"     — description + extra chars (not description alone)
+✅ "MyStrongSecretPhrase2026!"   — mixed case + numbers + symbols
+✅ "P@ssw0rd!LongSecret"         — special chars + numbers + length
+✅ "КотБегемот2026НаДиете"       — Cyrillic + numbers
 ```
 
 ### Weak Secret Examples (avoid)
 ```
-❌ "GitHub Account"          — using description as secret (weak!)
-❌ "password"                — dictionary word, too short
-❌ "1234567890"              — only digits, too short
-❌ "qwerty123"               — keyboard pattern
-❌ Same as description       — never use the same value as password description
+❌ "GitHub Account"              — using description as secret (weak!)
+❌ "password"                    — dictionary word, too short
+❌ "1234567890"                  — only digits, too short
+❌ "qwerty123"                   — keyboard pattern
+❌ Same as description           — never use the same value as password description
 ```
+
+### Decentralized Nature
+
+**There is no "forgot password" button.** This is by design:
+
+- No central server can reset your passwords
+- No support team can recover your access
+- Your secret phrase is the ONLY key
+
+**This is the price of true decentralization** — you are completely in control.
 
 ## Cross-Platform Compatibility
 
@@ -174,18 +199,18 @@ Smart Password Manager Desktop (C#) produces **identical passwords** to:
 - **[smartpasslib-csharp](https://github.com/smartlegionlab/smartpasslib-csharp)** - C#
 
 **CLI Applications:**
-- **[CLI PassMan (Python)](https://github.com/smartlegionlab/clipassman)**
-- **[CLI PassGen (Python)](https://github.com/smartlegionlab/clipassgen)**
-- **[CLI Manager (C#)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpCli)**
-- **[CLI Generator (C#)](https://github.com/smartlegionlab/SmartPasswordGeneratorCsharpCli)**
+- **[CLI Smart Password Manager (Python)](https://github.com/smartlegionlab/clipassman)**
+- **[CLI Smart Password Generator (Python)](https://github.com/smartlegionlab/clipassgen)**
+- **[CLI Smart Password Manager (C#)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpCli)**
+- **[CLI Smart Password Generator (C#)](https://github.com/smartlegionlab/SmartPasswordGeneratorCsharpCli)**
 
 **Desktop Applications:**
-- **[Desktop Manager (Python)](https://github.com/smartlegionlab/smart-password-manager-desktop)**
-- **[Desktop Manager (C#)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop)** (this)
+- **[Desktop Smart Password Manager (Python)](https://github.com/smartlegionlab/smart-password-manager-desktop)**
+- **[Desktop Smart Password Manager (C#)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop)** (this)
 
 **Other:**
-- **[Web Manager](https://github.com/smartlegionlab/smart-password-manager-web)**
-- **[Android Manager](https://github.com/smartlegionlab/smart-password-manager-android)**
+- **[Web Smart Password Manager](https://github.com/smartlegionlab/smart-password-manager-web)**
+- **[Android Smart Password Manager](https://github.com/smartlegionlab/smart-password-manager-android)**
 
 ## License
 
@@ -203,6 +228,4 @@ Copyright (©) 2026, [Alexander Suvorov](https://github.com/smartlegionlab)
 
 - **Issues**: [GitHub Issues](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/issues)
 - **Documentation**: This [README](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/blob/master/README.md)
-
----
 
