@@ -772,12 +772,20 @@ public partial class MainForm : Form
 "══════════════════════════════════════════════════════════════════════════════\n\n" +
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  DECENTRALIZED BY DESIGN\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+"  • No cloud, no database, no trust required\n" +
+"  • Your secrets never leave your device\n" +
+"  • There is no \"forgot password\" button — you are in complete control\n" +
+"  • Metadata can be synced via any channel (USB, cloud, even paper)\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
 "  HOW IT WORKS\n" +
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
 "  • Add a password entry with description and secret phrase\n" +
 "  • System generates a public key from your secret\n" +
 "  • Password is generated deterministically from your secret\n" +
-"  • Same secret + same length = same password every time\n\n" +
+"  • Same secret + same length = same password across all platforms\n\n" +
 
 "  To retrieve a password:\n" +
 "  → Select the entry → Click 'Get' → Enter secret phrase\n" +
@@ -816,9 +824,16 @@ public partial class MainForm : Form
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
 "  STORAGE LOCATIONS\n" +
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
-"  🐧 Linux:   ~/.config/smart_password_manager/passwords.json\n" +
 "  🪟 Windows: %USERPROFILE%\\.config\\smart_password_manager\\passwords.json\n" +
-"  📦 Exports: ~/SmartPasswordManager/passwords_export_[date]*.json\n\n" +
+"  📦 Exports: %USERPROFILE%\\SmartPasswordManager\\passwords_export_[date].json\n\n" +
+
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
+"  CROSS-PLATFORM COMPATIBILITY\n" +
+"━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
+"  Same secret + same length = identical passwords on:\n" +
+"  • Python (CLI PassMan, CLI PassGen, Desktop)\n" +
+"  • C# (CLI Manager, CLI Generator, Desktop)\n" +
+"  • Web, Android, and all smartpasslib implementations\n\n" +
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
 "  REQUIREMENTS\n" +
@@ -838,7 +853,7 @@ public partial class MainForm : Form
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
 "  Version v1.1.2 | Copyright © 2026 Alexander Suvorov\n" +
-"  Licensed under BSD 3-Clause License\n" +
+"  Licensed under BSD 3-Clause License | https://github.com/smartlegionlab\n" +
 "══════════════════════════════════════════════════════════════════════════════";
     }
 

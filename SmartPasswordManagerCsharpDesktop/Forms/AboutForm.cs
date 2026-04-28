@@ -30,7 +30,7 @@ public partial class AboutForm : Form
         {
             Dock = DockStyle.Fill,
             ColumnCount = 1,
-            RowCount = 11,
+            RowCount = 12,
             Padding = new Padding(0)
         };
 
@@ -41,6 +41,7 @@ public partial class AboutForm : Form
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 100));
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
+        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
         layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
@@ -68,7 +69,7 @@ public partial class AboutForm : Form
 
         var versionLabel = new Label
         {
-            Text = $"Version v1.1.2 | .NET 10.0 | Windows/Linux",
+            Text = $"Version v1.1.2 | .NET 10.0 | Windows",
             Font = new Font("Segoe UI", 10),
             ForeColor = Color.FromArgb(160, 160, 170),
             TextAlign = ContentAlignment.MiddleCenter,
@@ -78,7 +79,7 @@ public partial class AboutForm : Form
 
         var descLabel = new Label
         {
-            Text = "Deterministic password manager\nSame secret + same length = same password\nZero-password storage architecture",
+            Text = "Deterministic password manager\nSame secret + same length = same password\nZero-password storage architecture\nDecentralized by design — no cloud, no database, no trust required",
             Font = new Font("Segoe UI", 9),
             ForeColor = Color.FromArgb(200, 200, 200),
             TextAlign = ContentAlignment.MiddleCenter,
@@ -107,7 +108,8 @@ public partial class AboutForm : Form
                    "🔑 Deterministic generation\n" +
                    "🌐 Cross-platform compatible\n" +
                    "⚡ Lightweight & fast\n" +
-                   "🛡️ Zero-knowledge architecture",
+                   "🛡️ Zero-knowledge architecture\n" +
+                   "🏛️ Decentralized — no central servers",
             Font = new Font("Segoe UI", 9),
             ForeColor = Color.FromArgb(180, 180, 190),
             TextAlign = ContentAlignment.MiddleLeft,
@@ -156,12 +158,22 @@ public partial class AboutForm : Form
         };
         layout.Controls.Add(disclaimerLabel, 0, 9);
 
+        var requirementLabel = new Label
+        {
+            Text = "🔒 Secret phrase: Minimum 12 characters",
+            Font = new Font("Segoe UI", 9),
+            ForeColor = Color.FromArgb(140, 140, 150),
+            TextAlign = ContentAlignment.MiddleCenter,
+            Dock = DockStyle.Fill
+        };
+        layout.Controls.Add(requirementLabel, 0, 10);
+
         var spacer = new Label
         {
             Dock = DockStyle.Fill,
             Text = ""
         };
-        layout.Controls.Add(spacer, 0, 10);
+        layout.Controls.Add(spacer, 0, 11);
 
         mainPanel.Controls.Add(layout);
 
