@@ -12,7 +12,7 @@ public partial class AboutForm : Form
     private void InitializeComponent()
     {
         this.Text = "About Smart Password Manager";
-        this.Size = new Size(640, 550);
+        this.Size = new Size(640, 600);
         this.StartPosition = FormStartPosition.CenterParent;
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
@@ -23,59 +23,49 @@ public partial class AboutForm : Form
         var mainPanel = new Panel
         {
             Dock = DockStyle.Fill,
-            Padding = new Padding(30)
+            AutoScroll = true,
+            BackColor = Color.FromArgb(28, 28, 35)
         };
 
-        var layout = new TableLayoutPanel
+        var contentPanel = new FlowLayoutPanel
         {
-            Dock = DockStyle.Fill,
-            ColumnCount = 1,
-            RowCount = 12,
-            Padding = new Padding(0)
+            FlowDirection = FlowDirection.TopDown,
+            WrapContents = false,
+            AutoSize = true,
+            AutoSizeMode = AutoSizeMode.GrowAndShrink,
+            Padding = new Padding(30, 20, 30, 20),
+            BackColor = Color.FromArgb(28, 28, 35)
         };
 
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 80));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 40));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 50));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 100));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 30));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
-        layout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
-        layout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
-
-        var iconLabel = new Label
+        contentPanel.Controls.Add(new Label
         {
             Text = "🔐",
             Font = new Font("Segoe UI", 48),
             ForeColor = Color.FromArgb(0, 122, 204),
             TextAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(iconLabel, 0, 0);
+            Size = new Size(500, 80),
+            Margin = new Padding(0, 0, 0, 10)
+        });
 
-        var titleLabel = new Label
+        contentPanel.Controls.Add(new Label
         {
             Text = "Smart Password Manager",
             Font = new Font("Segoe UI", 18, FontStyle.Bold),
             ForeColor = Color.FromArgb(0, 122, 204),
             TextAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(titleLabel, 0, 1);
+            Size = new Size(500, 40),
+            Margin = new Padding(0, 0, 0, 5)
+        });
 
-        var versionLabel = new Label
+        contentPanel.Controls.Add(new Label
         {
-            Text = $"Version v1.1.2 | .NET 10.0 | Windows",
+            Text = $"Version v1.1.3 | .NET 10.0 | Windows",
             Font = new Font("Segoe UI", 10),
             ForeColor = Color.FromArgb(160, 160, 170),
             TextAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(versionLabel, 0, 2);
+            Size = new Size(500, 25),
+            Margin = new Padding(0, 0, 0, 15)
+        });
 
         var descLabel = new Label
         {
@@ -83,23 +73,27 @@ public partial class AboutForm : Form
             Font = new Font("Segoe UI", 9),
             ForeColor = Color.FromArgb(200, 200, 200),
             TextAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
+            AutoSize = false,
+            Size = new Size(500, 75),
+            Margin = new Padding(0, 0, 0, 15)
         };
-        layout.Controls.Add(descLabel, 0, 3);
+        contentPanel.Controls.Add(descLabel);
 
-        var separator = new Label
+        contentPanel.Controls.Add(new Label
         {
             Text = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
             ForeColor = Color.FromArgb(60, 60, 68),
             TextAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(separator, 0, 4);
+            Size = new Size(500, 20),
+            Margin = new Padding(0, 0, 0, 15)
+        });
 
         var infoPanel = new Panel
         {
-            Dock = DockStyle.Fill,
-            BackColor = Color.FromArgb(35, 35, 42)
+            BackColor = Color.FromArgb(35, 35, 42),
+            Size = new Size(500, 140),
+            Margin = new Padding(0, 0, 0, 15),
+            Padding = new Padding(15)
         };
 
         var infoLabel = new Label
@@ -112,70 +106,68 @@ public partial class AboutForm : Form
                    "🏛️ Decentralized — no central servers",
             Font = new Font("Segoe UI", 9),
             ForeColor = Color.FromArgb(180, 180, 190),
-            TextAlign = ContentAlignment.MiddleLeft,
             Dock = DockStyle.Fill,
-            Padding = new Padding(20, 10, 20, 10)
+            TextAlign = ContentAlignment.MiddleLeft
         };
         infoPanel.Controls.Add(infoLabel);
-        layout.Controls.Add(infoPanel, 0, 5);
+        contentPanel.Controls.Add(infoPanel);
 
-        var separator2 = new Label
+        contentPanel.Controls.Add(new Label
         {
             Text = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
             ForeColor = Color.FromArgb(60, 60, 68),
             TextAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(separator2, 0, 6);
+            Size = new Size(500, 20),
+            Margin = new Padding(0, 0, 0, 15)
+        });
 
-        var authorLabel = new Label
+        contentPanel.Controls.Add(new Label
         {
             Text = "👨‍💻 Author: Alexander Suvorov",
             Font = new Font("Segoe UI", 10),
             ForeColor = Color.FromArgb(160, 160, 170),
             TextAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(authorLabel, 0, 7);
+            Size = new Size(500, 30),
+            Margin = new Padding(0, 0, 0, 5)
+        });
 
-        var licenseLabel = new Label
+        contentPanel.Controls.Add(new Label
         {
             Text = "📄 License: BSD 3-Clause",
             Font = new Font("Segoe UI", 10),
             ForeColor = Color.FromArgb(160, 160, 170),
             TextAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(licenseLabel, 0, 8);
+            Size = new Size(500, 30),
+            Margin = new Padding(0, 0, 0, 5)
+        });
 
-        var disclaimerLabel = new Label
+        contentPanel.Controls.Add(new Label
         {
             Text = "⚠️ Disclaimer: Use at your own risk",
             Font = new Font("Segoe UI", 9),
             ForeColor = Color.FromArgb(140, 140, 150),
             TextAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(disclaimerLabel, 0, 9);
+            Size = new Size(500, 25),
+            Margin = new Padding(0, 0, 0, 5)
+        });
 
-        var requirementLabel = new Label
+        contentPanel.Controls.Add(new Label
         {
             Text = "🔒 Secret phrase: Minimum 12 characters",
             Font = new Font("Segoe UI", 9),
             ForeColor = Color.FromArgb(140, 140, 150),
             TextAlign = ContentAlignment.MiddleCenter,
-            Dock = DockStyle.Fill
-        };
-        layout.Controls.Add(requirementLabel, 0, 10);
+            Size = new Size(500, 25),
+            Margin = new Padding(0, 0, 0, 10)
+        });
 
-        var spacer = new Label
+        mainPanel.Controls.Add(contentPanel);
+
+        contentPanel.Location = new Point((mainPanel.Width - contentPanel.Width) / 2, 0);
+        mainPanel.Resize += (s, e) =>
         {
-            Dock = DockStyle.Fill,
-            Text = ""
+            contentPanel.Location = new Point(Math.Max(0, (mainPanel.Width - contentPanel.Width) / 2), 0);
         };
-        layout.Controls.Add(spacer, 0, 11);
-
-        mainPanel.Controls.Add(layout);
 
         var buttonPanel = new Panel
         {
