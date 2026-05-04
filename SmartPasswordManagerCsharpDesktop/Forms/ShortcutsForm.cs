@@ -68,6 +68,7 @@ public partial class ShortcutsForm : Form
         listBox.Items.Add("Ctrl + N     →  Add new password");
         listBox.Items.Add("Ctrl + E     →  Edit selected password");
         listBox.Items.Add("Ctrl + G     →  Get password (copy to clipboard)");
+        listBox.Items.Add("Ctrl + R     →  Show QR code for selected password");
         listBox.Items.Add("Ctrl + I     →  Import passwords");
         listBox.Items.Add("Ctrl + X     →  Export passwords");
         listBox.Items.Add("Ctrl + F     →  Focus search box");

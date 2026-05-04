@@ -151,16 +151,6 @@ public partial class AboutForm : Form
             Margin = new Padding(0, 0, 0, 5)
         });
 
-        contentPanel.Controls.Add(new Label
-        {
-            Text = "🔒 Secret phrase: Minimum 12 characters",
-            Font = new Font("Segoe UI", 9),
-            ForeColor = Color.FromArgb(140, 140, 150),
-            TextAlign = ContentAlignment.MiddleCenter,
-            Size = new Size(500, 25),
-            Margin = new Padding(0, 0, 0, 10)
-        });
-
         mainPanel.Controls.Add(contentPanel);
 
         contentPanel.Location = new Point((mainPanel.Width - contentPanel.Width) / 2, 0);
