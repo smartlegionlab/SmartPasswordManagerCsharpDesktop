@@ -1,4 +1,4 @@
-# Smart Password Manager Desktop (C#) <sup>v1.1.4</sup>
+# Smart Password Manager Desktop (C#) <sup>v1.1.5</sup>
 
 ---
 
