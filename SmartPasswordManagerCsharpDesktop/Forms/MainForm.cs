@@ -40,7 +40,7 @@ public partial class MainForm : Form
 
     private void InitializeComponent()
     {
-        this.Text = "Smart Password Manager v1.1.3";
+        this.Text = "Smart Password Manager";
         this.Size = new Size(1100, 750);
         this.StartPosition = FormStartPosition.CenterScreen;
         this.MinimumSize = new Size(800, 600);
@@ -106,6 +106,11 @@ public partial class MainForm : Form
         getItem.ShortcutKeys = Keys.Control | Keys.G;
         getItem.ShowShortcutKeys = true;
         passwordsMenu.DropDownItems.Add(getItem);
+
+        var qrItem = new ToolStripMenuItem("QR Code", null, (s, e) => ShowQRCode());
+        qrItem.ShortcutKeys = Keys.Control | Keys.R;
+        qrItem.ShowShortcutKeys = true;
+        passwordsMenu.DropDownItems.Add(qrItem);
 
         passwordsMenu.DropDownItems.Add(new ToolStripSeparator());
 
@@ -331,8 +336,8 @@ public partial class MainForm : Form
         var contextMenu = new ContextMenuStrip();
         contextMenu.BackColor = Color.FromArgb(35, 35, 42);
         contextMenu.ForeColor = Color.FromArgb(220, 220, 230);
-
         contextMenu.Items.Add("🔓 Get Password", null, (s, e) => GetPassword());
+        contextMenu.Items.Add("📱 QR Code", null, (s, e) => ShowQRCode());
         contextMenu.Items.Add("✎ Edit", null, (s, e) => EditPassword());
         contextMenu.Items.Add(new ToolStripSeparator());
         contextMenu.Items.Add("🗑 Delete", null, (s, e) => DeletePassword());
@@ -806,6 +811,7 @@ public partial class MainForm : Form
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
 "  Ctrl + N     →  Add new password\n" +
 "  Ctrl + E     →  Edit selected password\n" +
+"  Ctrl + R     →  Show QR code for selected password\n" +
 "  Ctrl + G     →  Get password (copy to clipboard)\n" +
 "  Ctrl + I     →  Import passwords\n" +
 "  Ctrl + X     →  Export passwords\n" +
@@ -1048,5 +1054,53 @@ public partial class MainForm : Form
             Application.Exit();
             e.Handled = true;
         }
+        else if (e.Control && e.KeyCode == Keys.R)
+        {
+            ShowQRCode();
+            e.Handled = true;
+        }
     }
+
+    private void ShowQRCode()
+    {
+        if (_listView.SelectedItems.Count == 0)
+        {
+            MessageBox.Show("Please select a password to generate QR code",
+                "No Selection", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return;
+        }
+
+        var selectedItem = _listView.SelectedItems[0];
+        var publicKey = selectedItem.Tag?.ToString();
+
+        if (string.IsNullOrEmpty(publicKey))
+        {
+            MessageBox.Show("Invalid selection", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        var currentPassword = _manager.GetSmartPassword(publicKey);
+
+        if (currentPassword == null)
+        {
+            MessageBox.Show("Password not found", "Error",
+                MessageBoxButtons.OK, MessageBoxIcon.Error);
+            return;
+        }
+
+        try
+        {
+            using (var qrForm = new QRCodeForm(currentPassword))
+            {
+                qrForm.ShowDialog();
+            }
+        }
+        catch (Exception ex)
+        {
+            MessageBox.Show($"Failed to show QR code: {ex.Message}",
+                "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        }
+    }
+
 }

@@ -11,7 +11,10 @@ public partial class AddPasswordForm : Form
     private Button _cancelButton = null!;
     private Button _showHideButton = null!;
     private Label _strengthLabel = null!;
+    private Label _descriptionCounterLabel = null!;
     private bool _isPasswordVisible = false;
+
+    private const int MaxDescriptionLength = 255;
 
     public string Description => _descriptionBox.Text.Trim();
     public string Secret => _secretBox.Text;
@@ -21,6 +24,44 @@ public partial class AddPasswordForm : Form
     {
         InitializeComponent();
         SetupSecretStrengthCheck();
+        SetupDescriptionCounter();
+    }
+
+    private void SetupDescriptionCounter()
+    {
+        _descriptionBox.TextChanged += (s, e) => UpdateDescriptionCounter();
+        UpdateDescriptionCounter();
+    }
+
+    private void UpdateDescriptionCounter()
+    {
+        int currentLength = _descriptionBox.Text.Length;
+        int remaining = MaxDescriptionLength - currentLength;
+
+        if (currentLength > MaxDescriptionLength)
+        {
+            _descriptionBox.Text = _descriptionBox.Text.Substring(0, MaxDescriptionLength);
+            _descriptionBox.SelectionStart = MaxDescriptionLength;
+            return;
+        }
+
+        string counterText = $"{currentLength}/{MaxDescriptionLength}";
+
+        if (remaining < 0)
+        {
+            _descriptionCounterLabel.Text = $"⚠️ {counterText} EXCEEDED!";
+            _descriptionCounterLabel.ForeColor = Color.FromArgb(220, 53, 69);
+        }
+        else if (remaining < 20)
+        {
+            _descriptionCounterLabel.Text = $"⚠️ {counterText} - {remaining} chars left";
+            _descriptionCounterLabel.ForeColor = Color.FromArgb(255, 193, 7);
+        }
+        else
+        {
+            _descriptionCounterLabel.Text = $"📝 {counterText}";
+            _descriptionCounterLabel.ForeColor = Color.FromArgb(160, 160, 170);
+        }
     }
 
     private void SetupSecretStrengthCheck()
@@ -88,7 +129,7 @@ public partial class AddPasswordForm : Form
     private void InitializeComponent()
     {
         this.Text = "Add Smart Password";
-        this.Size = new Size(560, 460);
+        this.Size = new Size(560, 500);
         this.StartPosition = FormStartPosition.CenterParent;
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
@@ -111,11 +152,13 @@ public partial class AddPasswordForm : Form
             BackColor = Color.FromArgb(32, 32, 38)
         };
 
-        var descPanel = new Panel { Width = 500, Height = 70, Margin = new Padding(0, 0, 0, 8), BackColor = Color.FromArgb(32, 32, 38) };
+        var descPanel = new Panel { Width = 500, Height = 95, Margin = new Padding(0, 0, 0, 8), BackColor = Color.FromArgb(32, 32, 38) };
         var descLabel = new Label { Text = "Description", Location = new Point(0, 0), Size = new Size(500, 25), ForeColor = Color.FromArgb(0, 122, 204), Font = new Font("Segoe UI", 10, FontStyle.Bold) };
-        _descriptionBox = new TextBox { Location = new Point(0, 28), Size = new Size(500, 32), BackColor = Color.FromArgb(45, 45, 52), ForeColor = Color.FromArgb(220, 220, 230), BorderStyle = BorderStyle.FixedSingle, Font = new Font("Segoe UI", 11) };
+        _descriptionBox = new TextBox { Location = new Point(0, 28), Size = new Size(500, 32), BackColor = Color.FromArgb(45, 45, 52), ForeColor = Color.FromArgb(220, 220, 230), BorderStyle = BorderStyle.FixedSingle, Font = new Font("Segoe UI", 11), MaxLength = MaxDescriptionLength };
+        _descriptionCounterLabel = new Label { Location = new Point(0, 65), Size = new Size(500, 22), Font = new Font("Segoe UI", 8), TextAlign = ContentAlignment.MiddleRight };
         descPanel.Controls.Add(descLabel);
         descPanel.Controls.Add(_descriptionBox);
+        descPanel.Controls.Add(_descriptionCounterLabel);
         flowLayout.Controls.Add(descPanel);
 
         var secretPanel = new Panel { Width = 500, Height = 70, Margin = new Padding(0, 0, 0, 8), BackColor = Color.FromArgb(32, 32, 38) };
@@ -172,6 +215,22 @@ public partial class AddPasswordForm : Form
             if (string.IsNullOrWhiteSpace(Description))
             {
                 MessageBox.Show("Description cannot be empty!\n\nPlease enter a description for this password.",
+                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+
+            if (Description.Length > MaxDescriptionLength)
+            {
+                MessageBox.Show($"Description is too long!\n\nMaximum {MaxDescriptionLength} characters allowed.\nCurrent: {Description.Length} characters.",
+                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+
+            if (Description.Any(c => c == '\"' || c == '\\' || c == '\n' || c == '\r' || c == '\t'))
+            {
+                MessageBox.Show("Description contains invalid characters!\n\nInvalid characters: \\ \" \\n \\r \\t\nPlease remove them and try again.",
                     "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.DialogResult = DialogResult.None;
                 return;

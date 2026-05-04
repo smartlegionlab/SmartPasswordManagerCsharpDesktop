@@ -51,6 +51,7 @@ Smart Password Manager stores nothing. Your secrets never leave your device. Pas
 - **Copy to Clipboard**: One-click password copying
 - **Keyboard Shortcuts**: Full keyboard navigation
 - **Context Menus**: Right-click for quick actions
+- **QR Code Export**: Transfer password metadata to Android app via QR code
 
 ## Security Model
 
@@ -111,26 +112,49 @@ SmartPasswordManagerCsharpDesktop.exe
 
 ![Main Interface](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/raw/master/data/images/smart-password-manager-win-desktop.png)
 
+### QR Code Export to Mobile
+
+The application allows you to export password metadata to the **Smart Password Manager Android** app via QR code:
+
+**How to use:**
+1. Select any password in the list
+2. Right-click and choose **QR Code**, press **Ctrl+R**, or go to **Passwords → QR Code**
+3. A dialog with QR code will appear containing the password metadata
+4. Open the Android app and scan the QR code
+5. The password entry will be automatically added to your mobile device
+
+**What's included in QR:**
+- Password length
+- Public verification key
+
+**What's NOT included:**
+- Password description (shown in dialog for reference, but not embedded in QR)
+- Your secret phrase (never leaves your device)
+- The actual password
+
+**Security Note:** QR codes contain only metadata that is already stored locally. Your secret phrase and actual passwords are never embedded in QR codes.
+
 ### Keyboard Shortcuts
 
-| Shortcut       | Action                            |
-|----------------|-----------------------------------|
-| `Ctrl+N`       | Add new password                  |
-| `Ctrl+E`       | Edit selected                     |
-| `Ctrl+G`       | Get password                      |
-| `Ctrl+I`       | Import passwords                  |
-| `Ctrl+X`       | Export passwords                  |
-| `Ctrl+F`       | Focus search box                  |
-| `Ctrl+/`       | Show shortcuts                    |
-| `Ctrl+Shift+S` | Create desktop shortcut           |
-| `Ctrl+D`       | Show disclaimer                   |
-| `Ctrl+L`       | Show license                      |
-| `Ctrl+A`       | Show about                        |
-| `Ctrl+Q`       | Exit application                  |
-| `Delete`       | Delete selected                   |
-| `F5`           | Refresh list                      |
-| `F1`           | Show help                         |
-| `Enter`        | Get password (when item selected) |
+| Shortcut       | Action                              |
+|----------------|-------------------------------------|
+| `Ctrl+N`       | Add new password                    |
+| `Ctrl+E`       | Edit selected                       |
+| `Ctrl+R`       | Show QR code for selected password  |
+| `Ctrl+G`       | Get password                        |
+| `Ctrl+I`       | Import passwords                    |
+| `Ctrl+X`       | Export passwords                    |
+| `Ctrl+F`       | Focus search box                    |
+| `Ctrl+/`       | Show shortcuts                      |
+| `Ctrl+Shift+S` | Create desktop shortcut             |
+| `Ctrl+D`       | Show disclaimer                     |
+| `Ctrl+L`       | Show license                        |
+| `Ctrl+A`       | Show about                          |
+| `Ctrl+Q`       | Exit application                    |
+| `Delete`       | Delete selected                     |
+| `F5`           | Refresh list                        |
+| `F1`           | Show help                           |
+| `Enter`        | Get password (when item selected)   |
 
 ## Storage Locations
 
@@ -175,6 +199,19 @@ SmartPasswordManagerCsharpDesktop.exe
 
 **This is the price of true decentralization** — you are completely in control.
 
+## Cross-Platform Data Transfer
+
+Smart Password Manager Desktop (C#) supports seamless metadata transfer across all platforms:
+
+**Methods:**
+- **QR codes** - Transfer password metadata from Desktop to Android app instantly
+- **Export/Import** - JSON export/import works across all platforms (Desktop Python, Web, CLI, Android)
+
+**Cross-platform compatibility:**
+- Same JSON format for export/import on all platforms
+- QR code format is identical across Desktop (C# and Python) and Web versions
+- Metadata sync without cloud dependency
+
 ## Cross-Platform Compatibility
 
 Smart Password Manager Desktop (C#) produces **identical passwords** to:
@@ -188,6 +225,8 @@ Smart Password Manager Desktop (C#) produces **identical passwords** to:
 | CLI Generator C# | [CLI Generator (C#)](https://github.com/smartlegionlab/SmartPasswordGeneratorCsharpCli) |
 | Web              | [Web Manager](https://github.com/smartlegionlab/smart-password-manager-web)             |
 | Android          | [Android Manager](https://github.com/smartlegionlab/smart-password-manager-android)     |
+
+**Data transfer:** Use QR codes or Export/Import to sync metadata across all platforms.
 
 ## Ecosystem
 

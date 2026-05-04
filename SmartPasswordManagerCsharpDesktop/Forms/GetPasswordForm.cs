@@ -6,6 +6,7 @@ public partial class GetPasswordForm : Form
     private Button _okButton = null!;
     private Button _cancelButton = null!;
     private Button _showHideButton = null!;
+    private TextBox _descriptionTextBox = null!;
     private bool _isPasswordVisible = false;
 
     public string Secret => _secretBox.Text;
@@ -18,7 +19,7 @@ public partial class GetPasswordForm : Form
     private void InitializeComponent(string description, int length)
     {
         this.Text = "Get Password";
-        this.Size = new Size(560, 380);
+        this.Size = new Size(560, 450);
         this.StartPosition = FormStartPosition.CenterParent;
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
@@ -44,7 +45,7 @@ public partial class GetPasswordForm : Form
         var descPanel = new Panel
         {
             Width = 500,
-            Height = 65,
+            Height = 100,
             Margin = new Padding(0, 0, 0, 12),
             BackColor = Color.FromArgb(32, 32, 38)
         };
@@ -58,17 +59,23 @@ public partial class GetPasswordForm : Form
             Font = new Font("Segoe UI", 10, FontStyle.Bold)
         };
 
-        var descriptionValueLabel = new Label
+        _descriptionTextBox = new TextBox
         {
-            Text = description,
             Location = new Point(0, 28),
-            Size = new Size(500, 25),
+            Size = new Size(500, 60),
+            BackColor = Color.FromArgb(45, 45, 52),
             ForeColor = Color.FromArgb(220, 220, 230),
-            Font = new Font("Segoe UI", 11)
+            BorderStyle = BorderStyle.FixedSingle,
+            Font = new Font("Segoe UI", 10),
+            Text = description,
+            ReadOnly = true,
+            Multiline = true,
+            WordWrap = true,
+            ScrollBars = ScrollBars.Vertical
         };
 
         descPanel.Controls.Add(descLabel);
-        descPanel.Controls.Add(descriptionValueLabel);
+        descPanel.Controls.Add(_descriptionTextBox);
         flowLayout.Controls.Add(descPanel);
 
         var lengthPanel = new Panel

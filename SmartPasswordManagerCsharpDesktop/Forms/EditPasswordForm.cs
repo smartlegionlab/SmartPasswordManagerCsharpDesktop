@@ -6,6 +6,9 @@ public partial class EditPasswordForm : Form
     private NumericUpDown _lengthBox = null!;
     private Button _okButton = null!;
     private Button _cancelButton = null!;
+    private Label _descriptionCounterLabel = null!;
+
+    private const int MaxDescriptionLength = 255;
 
     public string Description => _descriptionBox.Text.Trim();
     public int Length => (int)_lengthBox.Value;
@@ -15,12 +18,50 @@ public partial class EditPasswordForm : Form
         InitializeComponent();
         _descriptionBox.Text = currentDescription;
         _lengthBox.Value = currentLength;
+        SetupDescriptionCounter();
+    }
+
+    private void SetupDescriptionCounter()
+    {
+        _descriptionBox.TextChanged += (s, e) => UpdateDescriptionCounter();
+        UpdateDescriptionCounter();
+    }
+
+    private void UpdateDescriptionCounter()
+    {
+        int currentLength = _descriptionBox.Text.Length;
+        int remaining = MaxDescriptionLength - currentLength;
+
+        if (currentLength > MaxDescriptionLength)
+        {
+            _descriptionBox.Text = _descriptionBox.Text.Substring(0, MaxDescriptionLength);
+            _descriptionBox.SelectionStart = MaxDescriptionLength;
+            return;
+        }
+
+        string counterText = $"{currentLength}/{MaxDescriptionLength}";
+
+        if (remaining < 0)
+        {
+            _descriptionCounterLabel.Text = $"⚠️ {counterText} EXCEEDED!";
+            _descriptionCounterLabel.ForeColor = Color.FromArgb(220, 53, 69);
+        }
+        else if (remaining < 20)
+        {
+            _descriptionCounterLabel.Text = $"⚠️ {counterText} - {remaining} chars left";
+            _descriptionCounterLabel.ForeColor = Color.FromArgb(255, 193, 7);
+        }
+        else
+        {
+            _descriptionCounterLabel.Text = $"📝 {counterText}";
+            _descriptionCounterLabel.ForeColor = Color.FromArgb(160, 160, 170);
+        }
     }
 
     private void InitializeComponent()
     {
         this.Text = "Edit Smart Password";
-        this.Size = new Size(560, 300);
+        this.Size = new Size(560, 350);
         this.StartPosition = FormStartPosition.CenterParent;
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
@@ -46,7 +87,7 @@ public partial class EditPasswordForm : Form
         var descPanel = new Panel
         {
             Width = 500,
-            Height = 70,
+            Height = 95,
             Margin = new Padding(0, 0, 0, 16),
             BackColor = Color.FromArgb(32, 32, 38)
         };
@@ -67,11 +108,21 @@ public partial class EditPasswordForm : Form
             BackColor = Color.FromArgb(45, 45, 52),
             ForeColor = Color.FromArgb(220, 220, 230),
             BorderStyle = BorderStyle.FixedSingle,
-            Font = new Font("Segoe UI", 11)
+            Font = new Font("Segoe UI", 11),
+            MaxLength = MaxDescriptionLength
+        };
+
+        _descriptionCounterLabel = new Label
+        {
+            Location = new Point(0, 65),
+            Size = new Size(500, 22),
+            Font = new Font("Segoe UI", 8),
+            TextAlign = ContentAlignment.MiddleRight
         };
 
         descPanel.Controls.Add(descLabel);
         descPanel.Controls.Add(_descriptionBox);
+        descPanel.Controls.Add(_descriptionCounterLabel);
         flowLayout.Controls.Add(descPanel);
 
         var lengthPanel = new Panel
@@ -159,6 +210,22 @@ public partial class EditPasswordForm : Form
             if (string.IsNullOrWhiteSpace(Description))
             {
                 MessageBox.Show("Description cannot be empty!\n\nPlease enter a description for this password.",
+                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+
+            if (Description.Length > MaxDescriptionLength)
+            {
+                MessageBox.Show($"Description is too long!\n\nMaximum {MaxDescriptionLength} characters allowed.\nCurrent: {Description.Length} characters.",
+                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                this.DialogResult = DialogResult.None;
+                return;
+            }
+
+            if (Description.Any(c => c == '\"' || c == '\\' || c == '\n' || c == '\r' || c == '\t'))
+            {
+                MessageBox.Show("Description contains invalid characters!\n\nInvalid characters: \\ \" \\n \\r \\t\nPlease remove them and try again.",
                     "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 this.DialogResult = DialogResult.None;
                 return;
