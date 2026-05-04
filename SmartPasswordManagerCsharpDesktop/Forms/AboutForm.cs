@@ -59,7 +59,7 @@ public partial class AboutForm : Form
 
         contentPanel.Controls.Add(new Label
         {
-            Text = $"Version v1.1.3 | .NET 10.0 | Windows",
+            Text = $"Version v1.1.4 | .NET 10.0 | Windows",
             Font = new Font("Segoe UI", 10),
             ForeColor = Color.FromArgb(160, 160, 170),
             TextAlign = ContentAlignment.MiddleCenter,

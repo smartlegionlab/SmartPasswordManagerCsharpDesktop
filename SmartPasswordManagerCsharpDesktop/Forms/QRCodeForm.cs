@@ -25,80 +25,13 @@ public partial class QRCodeForm : Form
     private void InitializeComponent()
     {
         this.Text = "QR Code - Smart Password";
-        this.Size = new Size(550, 700);
+        this.Size = new Size(550, 750);
         this.StartPosition = FormStartPosition.CenterParent;
         this.FormBorderStyle = FormBorderStyle.FixedDialog;
         this.MaximizeBox = false;
         this.MinimizeBox = false;
         this.BackColor = Color.FromArgb(28, 28, 35);
         this.ForeColor = Color.FromArgb(220, 220, 230);
-
-        var bottomPanel = new Panel
-        {
-            Dock = DockStyle.Bottom,
-            Height = 60,
-            BackColor = Color.FromArgb(35, 35, 42),
-            Padding = new Padding(10)
-        };
-
-        var buttonsFlow = new FlowLayoutPanel
-        {
-            Dock = DockStyle.Fill,
-            FlowDirection = FlowDirection.RightToLeft,
-            Padding = new Padding(0),
-            BackColor = Color.FromArgb(35, 35, 42),
-            WrapContents = false
-        };
-
-        _closeButton = new Button
-        {
-            Text = "Close",
-            BackColor = Color.FromArgb(60, 60, 68),
-            ForeColor = Color.White,
-            FlatStyle = FlatStyle.Flat,
-            Font = new Font("Segoe UI", 9, FontStyle.Bold),
-            Cursor = Cursors.Hand,
-            Size = new Size(100, 38),
-            Margin = new Padding(5, 0, 0, 0),
-            TextAlign = ContentAlignment.MiddleCenter
-        };
-        _closeButton.FlatAppearance.BorderSize = 0;
-        _closeButton.Click += (s, e) => this.Close();
-
-        _copyButton = new Button
-        {
-            Text = "📋 Copy JSON",
-            BackColor = Color.FromArgb(0, 122, 204),
-            ForeColor = Color.White,
-            FlatStyle = FlatStyle.Flat,
-            Font = new Font("Segoe UI", 9, FontStyle.Bold),
-            Cursor = Cursors.Hand,
-            Size = new Size(120, 38),
-            Margin = new Padding(5, 0, 0, 0),
-            TextAlign = ContentAlignment.MiddleCenter
-        };
-        _copyButton.FlatAppearance.BorderSize = 0;
-        _copyButton.Click += (s, e) => CopyJSON();
-
-        _androidButton = new Button
-        {
-            Text = "📲 Android App",
-            BackColor = Color.FromArgb(40, 167, 69),
-            ForeColor = Color.White,
-            FlatStyle = FlatStyle.Flat,
-            Font = new Font("Segoe UI", 9, FontStyle.Bold),
-            Cursor = Cursors.Hand,
-            Size = new Size(130, 38),
-            Margin = new Padding(5, 0, 0, 0),
-            TextAlign = ContentAlignment.MiddleCenter
-        };
-        _androidButton.FlatAppearance.BorderSize = 0;
-        _androidButton.Click += (s, e) => OpenAndroidUrl();
-
-        buttonsFlow.Controls.Add(_closeButton);
-        buttonsFlow.Controls.Add(_copyButton);
-        buttonsFlow.Controls.Add(_androidButton);
-        bottomPanel.Controls.Add(buttonsFlow);
 
         var scrollPanel = new Panel
         {
@@ -109,7 +42,7 @@ public partial class QRCodeForm : Form
 
         var contentPanel = new Panel
         {
-            Size = new Size(510, 600),
+            Size = new Size(510, 680),
             Location = new Point(0, 0),
             BackColor = Color.FromArgb(28, 28, 35)
         };
@@ -261,14 +194,81 @@ public partial class QRCodeForm : Form
             Size = new Size(480, 55)
         };
         contentPanel.Controls.Add(noteLabel);
-        y += 65;
+        y += 70;
 
         contentPanel.Height = y;
 
         scrollPanel.Controls.Add(contentPanel);
 
-        this.Controls.Add(bottomPanel);
+        var bottomPanel = new Panel
+        {
+            Dock = DockStyle.Bottom,
+            Height = 60,
+            BackColor = Color.FromArgb(35, 35, 42),
+            Padding = new Padding(10)
+        };
+
+        var buttonsFlow = new FlowLayoutPanel
+        {
+            Dock = DockStyle.Fill,
+            FlowDirection = FlowDirection.RightToLeft,
+            Padding = new Padding(0),
+            BackColor = Color.FromArgb(35, 35, 42),
+            WrapContents = false
+        };
+
+        _closeButton = new Button
+        {
+            Text = "Close",
+            BackColor = Color.FromArgb(60, 60, 68),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Font = new Font("Segoe UI", 9, FontStyle.Bold),
+            Cursor = Cursors.Hand,
+            Size = new Size(100, 38),
+            Margin = new Padding(5, 0, 0, 0),
+            TextAlign = ContentAlignment.MiddleCenter
+        };
+        _closeButton.FlatAppearance.BorderSize = 0;
+        _closeButton.Click += (s, e) => this.Close();
+
+        _copyButton = new Button
+        {
+            Text = "📋 Copy JSON",
+            BackColor = Color.FromArgb(0, 122, 204),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Font = new Font("Segoe UI", 9, FontStyle.Bold),
+            Cursor = Cursors.Hand,
+            Size = new Size(120, 38),
+            Margin = new Padding(5, 0, 0, 0),
+            TextAlign = ContentAlignment.MiddleCenter
+        };
+        _copyButton.FlatAppearance.BorderSize = 0;
+        _copyButton.Click += (s, e) => CopyJSON();
+
+        _androidButton = new Button
+        {
+            Text = "📲 Android App",
+            BackColor = Color.FromArgb(40, 167, 69),
+            ForeColor = Color.White,
+            FlatStyle = FlatStyle.Flat,
+            Font = new Font("Segoe UI", 9, FontStyle.Bold),
+            Cursor = Cursors.Hand,
+            Size = new Size(130, 38),
+            Margin = new Padding(5, 0, 0, 0),
+            TextAlign = ContentAlignment.MiddleCenter
+        };
+        _androidButton.FlatAppearance.BorderSize = 0;
+        _androidButton.Click += (s, e) => OpenAndroidUrl();
+
+        buttonsFlow.Controls.Add(_closeButton);
+        buttonsFlow.Controls.Add(_copyButton);
+        buttonsFlow.Controls.Add(_androidButton);
+        bottomPanel.Controls.Add(buttonsFlow);
+
         this.Controls.Add(scrollPanel);
+        this.Controls.Add(bottomPanel);
     }
 
     private void GenerateQRCode()

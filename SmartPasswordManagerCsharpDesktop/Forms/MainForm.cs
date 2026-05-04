@@ -616,7 +616,7 @@ public partial class MainForm : Form
                     {
                         ["exported_at"] = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"),
                         ["app_name"] = "Smart Password Manager C# Desktop",
-                        ["app_version"] = "v1.1.3",
+                        ["app_version"] = "v1.1.4",
                         ["app_type"] = "Desktop",
                         ["lib_name"] = "smartpasslib-csharp",
                         ["lib_version"] = "v1.0.5",
@@ -858,7 +858,7 @@ public partial class MainForm : Form
 "  • Use emoji or non-Latin characters for stronger secrets\n\n" +
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
-"  Version v1.1.3 | Copyright © 2026 Alexander Suvorov\n" +
+"  Version v1.1.4 | Copyright © 2026 Alexander Suvorov\n" +
 "  Licensed under BSD 3-Clause License | https://github.com/smartlegionlab\n" +
 "══════════════════════════════════════════════════════════════════════════════";
     }
@@ -963,7 +963,7 @@ public partial class MainForm : Form
 "RESERVATION OR EXCEPTION.\n\n" +
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
-"  Version v1.1.3 | Copyright © 2026 Alexander Suvorov\n" +
+"  Version v1.1.4 | Copyright © 2026 Alexander Suvorov\n" +
 "══════════════════════════════════════════════════════════════════════════════";
     }
 
@@ -1008,7 +1008,7 @@ public partial class MainForm : Form
 "POSSIBILITY OF SUCH DAMAGE.\n\n" +
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
-"  Version v1.1.3 | Copyright © 2026 Alexander Suvorov\n" +
+"  Version v1.1.4 | Copyright © 2026 Alexander Suvorov\n" +
 "══════════════════════════════════════════════════════════════════════════════";
     }
 
