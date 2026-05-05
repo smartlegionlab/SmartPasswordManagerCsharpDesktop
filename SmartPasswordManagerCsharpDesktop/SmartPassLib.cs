@@ -1,5 +1,5 @@
 /**
- * SmartPassLib v1.0.5 - C# smart password generator
+ * SmartPassLib v4.0.0 - C# smart password generator
  * Cross-platform deterministic password generation
  * Same secret + same length = same password across all platforms
  * Decentralized by design — no central servers, no cloud dependency, no third-party trust required
@@ -7,13 +7,18 @@
  * Compatible with smartpasslib Python/JS/Kotlin/Go implementations
  *
  * Key derivation:
- * - Private key: 30 iterations of SHA-256 (used for password generation)
- * - Public key: 60 iterations of SHA-256 (used for verification, stored on server)
+ * - Private key: 15-30 iterations (dynamic, deterministic per secret)
+ * - Public key: 45-60 iterations (dynamic, deterministic per secret)
  *
  * Secret phrase:
  *   - is not transferred anywhere
  *   - is not stored anywhere
  *   - is required to generate the private key when creating a smart password
+ *   - minimum 12 characters (enforced)
+ *
+ * Password length:
+ *   - minimum 12 characters (enforced)
+ *   - maximum 100 characters (enforced)
  *
  * Ecosystem:
  *   - Core library (Python): https://github.com/smartlegionlab/smartpasslib
@@ -57,15 +62,14 @@ namespace SmartLegionLab.SmartPassLib
         /// <summary>
         /// Library version
         /// </summary>
-        public const string Version = "1.0.5";
+        public const string Version = "4.0.0";
 
         /// <summary>
-        /// Character set for password generation
+        /// Character set for password generation (Google-compatible)
+        /// Must match exactly with Python version: symbols + uppercase + digits + lowercase
         /// </summary>
-        public const string Chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$&*-_";
+        public const string Chars = "!@#$%^&*()_+-=[]{};:,.<>?/ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz";
 
-        private const int PrivateIterations = 30;
-        private const int PublicIterations = 60;
         private static readonly RandomNumberGenerator SecureRandom = RandomNumberGenerator.Create();
 
         private static string Sha256(string text)
@@ -75,29 +79,60 @@ namespace SmartLegionLab.SmartPassLib
             return Convert.ToHexString(hash).ToLower();
         }
 
-        private static string GenerateKey(string secret, int iterations)
+        private static void ValidateSecret(string secret)
         {
             if (string.IsNullOrEmpty(secret) || secret.Length < 12)
                 throw new ArgumentException($"Secret phrase must be at least 12 characters. Current: {secret?.Length ?? 0}");
+        }
 
-            var allHash = Sha256(secret);
-            for (var i = 0; i < iterations; i++)
+        private static void ValidatePasswordLength(int length)
+        {
+            if (length < 12)
+                throw new ArgumentException($"Password length must be at least 12 characters. Current: {length}");
+            if (length > 100)
+                throw new ArgumentException($"Password length cannot exceed 100 characters. Current: {length}");
+        }
+
+        private static int GetStepsFromSecret(string secret, int minSteps, int maxSteps, string salt)
+        {
+            var hashValue = Sha256($"{secret}:{salt}");
+            var hashInt = Convert.ToInt64(hashValue.Substring(0, 8), 16);
+            var steps = minSteps + (int)(hashInt % (maxSteps - minSteps + 1));
+            return steps;
+        }
+
+        private static string GenerateKey(string secret, int steps, string salt)
+        {
+            ValidateSecret(secret);
+
+            var allHash = Sha256($"{secret}:{salt}");
+            for (var i = 0; i < steps; i++)
             {
-                var tempString = $"{allHash}:{secret}:{i}";
+                var tempString = $"{allHash}:{i}";
                 allHash = Sha256(tempString);
             }
             return allHash;
         }
 
         /// <summary>
-        /// Generate private key (30 iterations) - for password generation, never stored
+        /// Generate private key (15-30 deterministic iterations) - for password generation, never stored
         /// </summary>
-        public static string GeneratePrivateKey(string secret) => GenerateKey(secret, PrivateIterations);
+        public static string GeneratePrivateKey(string secret)
+        {
+            ValidateSecret(secret);
+            var steps = GetStepsFromSecret(secret, 15, 30, "private");
+            return GenerateKey(secret, steps, "private");
+        }
 
         /// <summary>
-        /// Generate public key (60 iterations) - for verification, stored on server
+        /// Generate public key (45-60 deterministic iterations) - for verification, stored on server
         /// </summary>
-        public static string GeneratePublicKey(string secret) => GenerateKey(secret, PublicIterations);
+        public static string GeneratePublicKey(string secret)
+        {
+            ValidateSecret(secret);
+            var steps = GetStepsFromSecret(secret, 45, 60, "public");
+            return GenerateKey(secret, steps, "public");
+        }
 
         /// <summary>
         /// Verify secret against public key
@@ -114,8 +149,7 @@ namespace SmartLegionLab.SmartPassLib
 
         private static string GeneratePasswordFromPrivateKey(string privateKey, int length)
         {
-            if (length < 12 || length > 1000)
-                throw new ArgumentException($"Password length must be between 12 and 1000. Current: {length}");
+            ValidatePasswordLength(length);
 
             var result = new StringBuilder();
             var counter = 0;
@@ -141,11 +175,8 @@ namespace SmartLegionLab.SmartPassLib
         /// </summary>
         public static string GenerateSmartPassword(string secret, int length)
         {
-            if (string.IsNullOrEmpty(secret) || secret.Length < 12)
-                throw new ArgumentException($"Secret phrase must be at least 12 characters. Current: {secret?.Length ?? 0}");
-            if (length < 12 || length > 1000)
-                throw new ArgumentException($"Password length must be between 12 and 1000. Current: {length}");
-
+            ValidateSecret(secret);
+            ValidatePasswordLength(length);
             return GeneratePasswordFromPrivateKey(GeneratePrivateKey(secret), length);
         }
 
@@ -154,8 +185,7 @@ namespace SmartLegionLab.SmartPassLib
         /// </summary>
         public static string GenerateStrongPassword(int length)
         {
-            if (length < 12 || length > 1000)
-                throw new ArgumentException($"Password length must be between 12 and 1000. Current: {length}");
+            ValidatePasswordLength(length);
 
             var bytes = new byte[length];
             SecureRandom.GetBytes(bytes);
@@ -168,12 +198,14 @@ namespace SmartLegionLab.SmartPassLib
         public static string GenerateBasePassword(int length) => GenerateStrongPassword(length);
 
         /// <summary>
-        /// Generate authentication code for 2FA (4-20 chars)
+        /// Generate authentication code for 2FA (4-100 chars)
         /// </summary>
         public static string GenerateCode(int length)
         {
-            if (length < 4 || length > 20)
-                throw new ArgumentException($"Code length must be between 4 and 20. Current: {length}");
+            if (length < 4)
+                throw new ArgumentException($"Code length must be at least 4 characters. Current: {length}");
+            if (length > 100)
+                throw new ArgumentException($"Code length cannot exceed 100 characters. Current: {length}");
 
             var bytes = new byte[length];
             SecureRandom.GetBytes(bytes);
@@ -204,9 +236,31 @@ namespace SmartLegionLab.SmartPassLib
         /// </summary>
         public SmartPassword(string publicKey, string description, int length = 12)
         {
+            if (length < 12)
+                throw new ArgumentException($"Password length must be at least 12 characters. Current: {length}");
+            if (length > 100)
+                throw new ArgumentException($"Password length cannot exceed 100 characters. Current: {length}");
+
             PublicKey = publicKey ?? throw new ArgumentNullException(nameof(publicKey));
             Description = description ?? throw new ArgumentNullException(nameof(description));
             Length = length;
+        }
+
+        /// <summary>
+        /// Update metadata
+        /// </summary>
+        public void Update(string? description = null, int? length = null)
+        {
+            if (description != null)
+                Description = description;
+            if (length.HasValue)
+            {
+                if (length.Value < 12)
+                    throw new ArgumentException($"Password length must be at least 12 characters. Current: {length.Value}");
+                if (length.Value > 100)
+                    throw new ArgumentException($"Password length cannot exceed 100 characters. Current: {length.Value}");
+                Length = length.Value;
+            }
         }
 
         /// <summary>
@@ -304,8 +358,7 @@ namespace SmartLegionLab.SmartPassLib
             if (!_passwords.TryGetValue(publicKey, out var password))
                 return false;
 
-            if (description != null) password.Description = description;
-            if (length.HasValue) password.Length = length.Value;
+            password.Update(description, length);
             WriteData();
             return true;
         }
