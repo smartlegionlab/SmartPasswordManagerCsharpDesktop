@@ -118,7 +118,7 @@ SmartPasswordManagerCsharpDesktop.exe
 
 ### Main Interface
 
-![Main Interface](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/raw/master/data/images/smart-password-manager-win-desktop.png)
+![Main Interface](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/raw/master/data/images/smart-password-manager-csharp-desktop.png)
 
 ### QR Code Export to Mobile
 
