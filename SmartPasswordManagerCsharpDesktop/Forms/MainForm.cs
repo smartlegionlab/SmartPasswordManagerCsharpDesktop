@@ -128,12 +128,12 @@ public partial class MainForm : Form
 
         var helpMenu = new ToolStripMenuItem("Help");
 
-        var helpItem = new ToolStripMenuItem("📖 Help", null, (s, e) => ShowHelp());
+        var helpItem = new ToolStripMenuItem("Help", null, (s, e) => ShowHelp());
         helpItem.ShortcutKeys = Keys.F1;
         helpItem.ShowShortcutKeys = true;
         helpMenu.DropDownItems.Add(helpItem);
 
-        var shortcutsItem = new ToolStripMenuItem("⌨️ Shortcuts", null, (s, e) => ShowShortcuts());
+        var shortcutsItem = new ToolStripMenuItem("Shortcuts", null, (s, e) => ShowShortcuts());
         shortcutsItem.ShortcutKeys = Keys.Control | Keys.OemQuestion;
         shortcutsItem.ShortcutKeyDisplayString = "Ctrl+/";
         shortcutsItem.ShowShortcutKeys = true;
@@ -141,19 +141,19 @@ public partial class MainForm : Form
 
         helpMenu.DropDownItems.Add(new ToolStripSeparator());
 
-        var disclaimerItem = new ToolStripMenuItem("⚠️ Disclaimer", null, (s, e) => ShowDisclaimer());
+        var disclaimerItem = new ToolStripMenuItem("Disclaimer", null, (s, e) => ShowDisclaimer());
         disclaimerItem.ShortcutKeys = Keys.Control | Keys.D;
         disclaimerItem.ShowShortcutKeys = true;
         helpMenu.DropDownItems.Add(disclaimerItem);
 
-        var licenseItem = new ToolStripMenuItem("📄 License", null, (s, e) => ShowLicense());
+        var licenseItem = new ToolStripMenuItem("License", null, (s, e) => ShowLicense());
         licenseItem.ShortcutKeys = Keys.Control | Keys.L;
         licenseItem.ShowShortcutKeys = true;
         helpMenu.DropDownItems.Add(licenseItem);
 
         helpMenu.DropDownItems.Add(new ToolStripSeparator());
 
-        var aboutItem = new ToolStripMenuItem("ℹ️ About", null, (s, e) => ShowAbout());
+        var aboutItem = new ToolStripMenuItem("About", null, (s, e) => ShowAbout());
         aboutItem.ShortcutKeys = Keys.Control | Keys.A;
         aboutItem.ShowShortcutKeys = true;
         helpMenu.DropDownItems.Add(aboutItem);
@@ -197,7 +197,7 @@ public partial class MainForm : Form
         btnAdd.FlatAppearance.BorderSize = 0;
         btnAdd.Click += (s, e) => AddPassword();
 
-        var btnImport = new Button { Text = "📥 Import", BackColor = Color.FromArgb(108, 117, 125), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(125, 10), Cursor = Cursors.Hand };
+        var btnImport = new Button { Text = "Import", BackColor = Color.FromArgb(108, 117, 125), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(125, 10), Cursor = Cursors.Hand };
         btnImport.FlatAppearance.BorderSize = 0;
         btnImport.Click += (s, e) => ImportPasswords();
 
@@ -213,9 +213,9 @@ public partial class MainForm : Form
 
         _searchLabel = new Label
         {
-            Text = "🔍",
+            Text = "\uE721",
             ForeColor = Color.FromArgb(0, 122, 204),
-            Font = new Font("Segoe UI", 14),
+            Font = new Font("Segoe MDL2 Assets", 14),
             Location = new Point(20, 12),
             Size = new Size(30, 25),
             TextAlign = ContentAlignment.MiddleCenter
@@ -271,19 +271,19 @@ public partial class MainForm : Form
             BackColor = Color.FromArgb(35, 35, 42)
         };
 
-        var btnGet = new Button { Text = "🔓 Get", BackColor = Color.FromArgb(40, 167, 69), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(15, 10), Cursor = Cursors.Hand };
+        var btnGet = new Button { Text = "Get", BackColor = Color.FromArgb(40, 167, 69), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(15, 10), Cursor = Cursors.Hand };
         btnGet.FlatAppearance.BorderSize = 0;
         btnGet.Click += (s, e) => GetPassword();
 
-        var btnEdit = new Button { Text = "✎ Edit", BackColor = Color.FromArgb(255, 193, 7), ForeColor = Color.FromArgb(40, 40, 40), FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(125, 10), Cursor = Cursors.Hand };
+        var btnEdit = new Button { Text = "Edit", BackColor = Color.FromArgb(255, 193, 7), ForeColor = Color.FromArgb(40, 40, 40), FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(125, 10), Cursor = Cursors.Hand };
         btnEdit.FlatAppearance.BorderSize = 0;
         btnEdit.Click += (s, e) => EditPassword();
 
-        var btnDelete = new Button { Text = "🗑 Delete", BackColor = Color.FromArgb(220, 53, 69), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(235, 10), Cursor = Cursors.Hand };
+        var btnDelete = new Button { Text = "Delete", BackColor = Color.FromArgb(220, 53, 69), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(235, 10), Cursor = Cursors.Hand };
         btnDelete.FlatAppearance.BorderSize = 0;
         btnDelete.Click += (s, e) => DeletePassword();
 
-        var btnExport = new Button { Text = "📤 Export", BackColor = Color.FromArgb(108, 117, 125), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(345, 10), Cursor = Cursors.Hand };
+        var btnExport = new Button { Text = "Export", BackColor = Color.FromArgb(108, 117, 125), ForeColor = Color.White, FlatStyle = FlatStyle.Flat, Size = new Size(100, 40), Location = new Point(345, 10), Cursor = Cursors.Hand };
         btnExport.FlatAppearance.BorderSize = 0;
         btnExport.Click += (s, e) => ExportPasswords();
 
@@ -326,11 +326,11 @@ public partial class MainForm : Form
         var contextMenu = new ContextMenuStrip();
         contextMenu.BackColor = Color.FromArgb(35, 35, 42);
         contextMenu.ForeColor = Color.FromArgb(220, 220, 230);
-        contextMenu.Items.Add("🔓 Get Password", null, (s, e) => GetPassword());
-        contextMenu.Items.Add("📱 QR Code", null, (s, e) => ShowQRCode());
-        contextMenu.Items.Add("✎ Edit", null, (s, e) => EditPassword());
+        contextMenu.Items.Add("Get Password", null, (s, e) => GetPassword());
+        contextMenu.Items.Add("QR Code", null, (s, e) => ShowQRCode());
+        contextMenu.Items.Add("Edit", null, (s, e) => EditPassword());
         contextMenu.Items.Add(new ToolStripSeparator());
-        contextMenu.Items.Add("🗑 Delete", null, (s, e) => DeletePassword());
+        contextMenu.Items.Add("Delete", null, (s, e) => DeletePassword());
 
         contextMenu.RenderMode = ToolStripRenderMode.System;
 
@@ -789,12 +789,12 @@ public partial class MainForm : Form
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
 "  SECURITY NOTES\n" +
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
-"  ✓ Passwords are NEVER stored anywhere\n" +
-"  ✓ Secret phrase never leaves your device\n" +
-"  ✓ Only metadata (description, length, public key) is stored\n" +
-"  ✓ Lost secret phrase = permanently lost passwords\n" +
-"  ✓ Secret phrase must be at least 12 characters\n" +
-"  ⚠ Never use the description as your secret phrase!\n\n" +
+"  Passwords are NEVER stored anywhere\n" +
+"  Secret phrase never leaves your device\n" +
+"  Only metadata (description, length, public key) is stored\n" +
+"  Lost secret phrase = permanently lost passwords\n" +
+"  Secret phrase must be at least 12 characters\n" +
+"  Never use the description as your secret phrase!\n\n" +
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
 "  KEYBOARD SHORTCUTS\n" +
@@ -820,8 +820,8 @@ public partial class MainForm : Form
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
 "  STORAGE LOCATIONS\n" +
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
-"  🪟 Windows: %USERPROFILE%\\.config\\smart_password_manager\\passwords.json\n" +
-"  📦 Exports: %USERPROFILE%\\SmartPasswordManager\\passwords_export_[date].json\n\n" +
+"  Windows: %USERPROFILE%\\.config\\smart_password_manager\\passwords.json\n" +
+"  Exports: %USERPROFILE%\\SmartPasswordManager\\passwords_export_[date].json\n\n" +
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
 "  CROSS-PLATFORM COMPATIBILITY\n" +

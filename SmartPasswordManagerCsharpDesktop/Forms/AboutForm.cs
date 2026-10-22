@@ -39,8 +39,8 @@ public partial class AboutForm : Form
 
         contentPanel.Controls.Add(new Label
         {
-            Text = "🔐",
-            Font = new Font("Segoe UI", 48),
+            Text = "\uE72E",
+            Font = new Font("Segoe MDL2 Assets", 48),
             ForeColor = Color.FromArgb(0, 122, 204),
             TextAlign = ContentAlignment.MiddleCenter,
             Size = new Size(500, 80),
@@ -98,12 +98,12 @@ public partial class AboutForm : Form
 
         var infoLabel = new Label
         {
-            Text = "🔒 Passwords never stored\n" +
-                   "🔑 Deterministic generation\n" +
-                   "🌐 Cross-platform compatible\n" +
-                   "⚡ Lightweight & fast\n" +
-                   "🛡️ Zero-knowledge architecture\n" +
-                   "🏛️ Decentralized - no central servers",
+            Text = "Passwords never stored\n" +
+                   "Deterministic generation\n" +
+                   "Cross-platform compatible\n" +
+                   "Lightweight & fast\n" +
+                   "Zero-knowledge architecture\n" +
+                   "Decentralized - no central servers",
             Font = new Font("Segoe UI", 9),
             ForeColor = Color.FromArgb(180, 180, 190),
             Dock = DockStyle.Fill,
@@ -123,7 +123,7 @@ public partial class AboutForm : Form
 
         contentPanel.Controls.Add(new Label
         {
-            Text = "👨‍💻 Author: Alexander Suvorov",
+            Text = "Author: Alexander Suvorov",
             Font = new Font("Segoe UI", 10),
             ForeColor = Color.FromArgb(160, 160, 170),
             TextAlign = ContentAlignment.MiddleCenter,
@@ -133,7 +133,7 @@ public partial class AboutForm : Form
 
         contentPanel.Controls.Add(new Label
         {
-            Text = "📄 License: BSD 3-Clause",
+            Text = "License: BSD 3-Clause",
             Font = new Font("Segoe UI", 10),
             ForeColor = Color.FromArgb(160, 160, 170),
             TextAlign = ContentAlignment.MiddleCenter,
@@ -143,7 +143,7 @@ public partial class AboutForm : Form
 
         contentPanel.Controls.Add(new Label
         {
-            Text = "⚠️ Disclaimer: Use at your own risk",
+            Text = "Disclaimer: Use at your own risk",
             Font = new Font("Segoe UI", 9),
             ForeColor = Color.FromArgb(140, 140, 150),
             TextAlign = ContentAlignment.MiddleCenter,
@@ -176,10 +176,10 @@ public partial class AboutForm : Form
             WrapContents = false
         };
 
-        var githubButton = CreateStyledButton("📁 GitHub", "https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop");
-        var authorButton = CreateStyledButton("👨‍💻 Author", "https://github.com/smartlegionlab");
-        var licenseButton = CreateStyledButton("📄 License", "https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/blob/master/LICENSE");
-        var disclaimerButton = CreateStyledButton("⚠️ Disclaimer", "https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/blob/master/DISCLAIMER.md");
+        var githubButton = CreateStyledButton("GitHub", "https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop");
+        var authorButton = CreateStyledButton("Author", "https://github.com/smartlegionlab");
+        var licenseButton = CreateStyledButton("License", "https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/blob/master/LICENSE");
+        var disclaimerButton = CreateStyledButton("Disclaimer", "https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/blob/master/DISCLAIMER.md");
         var closeButton = CreateStyledButton("Close", null);
         closeButton.Click += (s, e) => this.Close();
 

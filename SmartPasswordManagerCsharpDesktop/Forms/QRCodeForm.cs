@@ -51,7 +51,7 @@ public partial class QRCodeForm : Form
 
         var titleLabel = new Label
         {
-            Text = "📱 QR Code for Smart Password",
+            Text = "QR Code for Smart Password",
             Font = new Font("Segoe UI", 14, FontStyle.Bold),
             ForeColor = Color.FromArgb(0, 122, 204),
             TextAlign = ContentAlignment.MiddleCenter,
@@ -186,7 +186,7 @@ public partial class QRCodeForm : Form
 
         var noteLabel = new Label
         {
-            Text = "📲 Scan this QR code with Smart Password Manager Android app\nto quickly access this password on your mobile device\n\n💡 Tip: Select and copy text from description or public key fields",
+            Text = "Scan this QR code with Smart Password Manager Android app\nto quickly access this password on your mobile device\n\n Tip: Select and copy text from description or public key fields",
             Font = new Font("Segoe UI", 8),
             ForeColor = Color.FromArgb(140, 140, 150),
             TextAlign = ContentAlignment.MiddleCenter,
@@ -234,7 +234,7 @@ public partial class QRCodeForm : Form
 
         _copyButton = new Button
         {
-            Text = "📋 Copy JSON",
+            Text = "Copy JSON",
             BackColor = Color.FromArgb(0, 122, 204),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -249,7 +249,7 @@ public partial class QRCodeForm : Form
 
         _androidButton = new Button
         {
-            Text = "📲 Android App",
+            Text = "Android App",
             BackColor = Color.FromArgb(40, 167, 69),
             ForeColor = Color.White,
             FlatStyle = FlatStyle.Flat,
@@ -318,7 +318,7 @@ public partial class QRCodeForm : Form
             Clipboard.SetText(jsonData);
 
             var originalText = _copyButton.Text;
-            _copyButton.Text = "✅ Copied!";
+            _copyButton.Text = "Copied!";
             _copyButton.BackColor = Color.FromArgb(40, 167, 69);
 
             var timer = new System.Windows.Forms.Timer();

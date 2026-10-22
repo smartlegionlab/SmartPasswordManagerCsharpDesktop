@@ -27,7 +27,7 @@ public partial class ShortcutsForm : Form
 
         var titleLabel = new Label
         {
-            Text = "⌨️ KEYBOARD SHORTCUTS",
+            Text = "KEYBOARD SHORTCUTS",
             Font = new Font("Segoe UI", 14, FontStyle.Bold),
             ForeColor = Color.FromArgb(0, 122, 204),
             TextAlign = ContentAlignment.MiddleCenter,

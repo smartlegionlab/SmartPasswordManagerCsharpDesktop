@@ -43,17 +43,17 @@ public partial class EditPasswordForm : Form
 
         if (remaining < 0)
         {
-            _descriptionCounterLabel.Text = $"⚠️ {counterText} EXCEEDED!";
+            _descriptionCounterLabel.Text = $"{counterText} EXCEEDED!";
             _descriptionCounterLabel.ForeColor = Color.FromArgb(220, 53, 69);
         }
         else if (remaining < 20)
         {
-            _descriptionCounterLabel.Text = $"⚠️ {counterText} - {remaining} chars left";
+            _descriptionCounterLabel.Text = $"{counterText} - {remaining} chars left";
             _descriptionCounterLabel.ForeColor = Color.FromArgb(255, 193, 7);
         }
         else
         {
-            _descriptionCounterLabel.Text = $"📝 {counterText}";
+            _descriptionCounterLabel.Text = $"{counterText}";
             _descriptionCounterLabel.ForeColor = Color.FromArgb(160, 160, 170);
         }
     }

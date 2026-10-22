@@ -20,7 +20,7 @@ Smart Password Manager stores nothing. Your secrets never leave your device. Pas
 
 ---
 
-## ⚠️ Disclaimer
+## Disclaimer
 
 **By using this software, you agree to the full disclaimer terms.**
 
@@ -186,9 +186,9 @@ The application allows you to export password metadata to the **Smart Password M
 
 ### Strong Secret Examples
 ```
-✅ "MyStrongSecretPhrase2026!"   - mixed case + numbers + symbols
-✅ "P@ssw0rd!LongSecret"         - special chars + numbers + length
-✅ "КотБегемот2026НаДиете"       - Cyrillic + numbers
+"MyStrongSecretPhrase2026!"   - mixed case + numbers + symbols
+"P@ssw0rd!LongSecret"         - special chars + numbers + length
+"КотБегемот2026НаДиете"       - Cyrillic + numbers
 ```
 
 ### Weak Secret Examples (avoid)

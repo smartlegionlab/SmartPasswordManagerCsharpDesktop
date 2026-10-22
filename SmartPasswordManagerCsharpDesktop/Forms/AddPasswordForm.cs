@@ -49,17 +49,17 @@ public partial class AddPasswordForm : Form
 
         if (remaining < 0)
         {
-            _descriptionCounterLabel.Text = $"⚠️ {counterText} EXCEEDED!";
+            _descriptionCounterLabel.Text = $"{counterText} EXCEEDED!";
             _descriptionCounterLabel.ForeColor = Color.FromArgb(220, 53, 69);
         }
         else if (remaining < 20)
         {
-            _descriptionCounterLabel.Text = $"⚠️ {counterText} - {remaining} chars left";
+            _descriptionCounterLabel.Text = $"{counterText} - {remaining} chars left";
             _descriptionCounterLabel.ForeColor = Color.FromArgb(255, 193, 7);
         }
         else
         {
-            _descriptionCounterLabel.Text = $"📝 {counterText}";
+            _descriptionCounterLabel.Text = $"{counterText}";
             _descriptionCounterLabel.ForeColor = Color.FromArgb(160, 160, 170);
         }
     }
@@ -80,27 +80,27 @@ public partial class AddPasswordForm : Form
 
         if (length == 0)
         {
-            strengthText = "⚪ Enter secret phrase";
+            strengthText = "Enter secret phrase";
             strengthColor = Color.FromArgb(160, 160, 170);
         }
         else if (length < 12)
         {
-            strengthText = $"🔴 TOO SHORT ({length}/12) - Must be at least 12 characters!";
+            strengthText = $"TOO SHORT ({length}/12) - Must be at least 12 characters!";
             strengthColor = Color.FromArgb(220, 53, 69);
         }
         else if (length < 16)
         {
-            strengthText = $"🟡 WEAK ({length} chars) - Use longer phrase (16+ recommended)";
+            strengthText = $"WEAK ({length} chars) - Use longer phrase (16+ recommended)";
             strengthColor = Color.FromArgb(255, 193, 7);
         }
         else if (length < 24)
         {
-            strengthText = $"🟢 GOOD ({length} chars) - Acceptable strength";
+            strengthText = $"GOOD ({length} chars) - Acceptable strength";
             strengthColor = Color.FromArgb(40, 167, 69);
         }
         else
         {
-            strengthText = $"💪 STRONG ({length} chars) - Excellent!";
+            strengthText = $"STRONG ({length} chars) - Excellent!";
             strengthColor = Color.FromArgb(0, 122, 204);
         }
 
@@ -113,12 +113,12 @@ public partial class AddPasswordForm : Form
 
             if (!hasUpper || !hasLower || !hasDigit)
             {
-                strengthText += " ⚠️ Add uppercase, lowercase and numbers";
+                strengthText += " Add uppercase, lowercase and numbers";
                 strengthColor = Color.FromArgb(255, 193, 7);
             }
             else if (hasNonLatin)
             {
-                strengthText += " ✨ Good! Using extended characters";
+                strengthText += " Good! Using extended characters";
             }
         }
 
@@ -187,7 +187,7 @@ public partial class AddPasswordForm : Form
         flowLayout.Controls.Add(strengthPanel);
 
         var tipsPanel = new Panel { Width = 500, Height = 35, Margin = new Padding(0, 0, 0, 12), BackColor = Color.FromArgb(32, 32, 38) };
-        var tipsLabel = new Label { Text = "💡 Use mixed case, numbers, symbols, or emoji (12+ chars minimum)", Location = new Point(0, 5), Size = new Size(500, 25), ForeColor = Color.FromArgb(108, 117, 125), Font = new Font("Segoe UI", 8.5f, FontStyle.Italic), TextAlign = ContentAlignment.MiddleLeft };
+        var tipsLabel = new Label { Text = " Use mixed case, numbers, symbols, or emoji (12+ chars minimum)", Location = new Point(0, 5), Size = new Size(500, 25), ForeColor = Color.FromArgb(108, 117, 125), Font = new Font("Segoe UI", 8.5f, FontStyle.Italic), TextAlign = ContentAlignment.MiddleLeft };
         tipsPanel.Controls.Add(tipsLabel);
         flowLayout.Controls.Add(tipsPanel);
 
