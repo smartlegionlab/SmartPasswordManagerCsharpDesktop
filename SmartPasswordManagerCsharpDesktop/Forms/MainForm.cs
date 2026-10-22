@@ -57,7 +57,7 @@ public partial class MainForm : Form
         };
 
         _mainLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 35));
-        _mainLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 80));
+        _mainLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 55));
         _mainLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 60));
         _mainLayout.RowStyles.Add(new RowStyle(SizeType.Absolute, 45));
         _mainLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 100));
@@ -185,17 +185,7 @@ public partial class MainForm : Form
             Size = new Size(400, 35)
         };
 
-        var subtitleLabel = new Label
-        {
-            Text = "Deterministic password manager - same secret + same length = same password",
-            Font = new Font("Segoe UI", 9),
-            ForeColor = Color.FromArgb(160, 160, 170),
-            Location = new Point(20, 45),
-            Size = new Size(700, 25)
-        };
-
         _headerPanel.Controls.Add(titleLabel);
-        _headerPanel.Controls.Add(subtitleLabel);
 
         _topButtonPanel = new Panel
         {
