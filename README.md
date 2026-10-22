@@ -1,4 +1,4 @@
-# Smart Password Manager Desktop (C#) <sup>v4.0.0</sup>
+# Smart Password Manager Desktop (C#) <sup>v4.0.1</sup>
 
 ---
 
@@ -76,7 +76,7 @@ Smart Password Manager stores nothing. Your secrets never leave your device. Pas
 
 Powered by **[smartpasslib-csharp](https://github.com/smartlegionlab/smartpasslib-csharp)** - C# implementation of deterministic password generation.
 
-**Key derivation (same as Python/JS/Kotlin/Go/Rust versions v4.0.0):**
+**Key derivation (same as Python/JS/Kotlin/Go/Rust versions v4.0.1):**
 
 | Key Type    | Iterations              | Purpose                                               |
 |-------------|-------------------------|-------------------------------------------------------|

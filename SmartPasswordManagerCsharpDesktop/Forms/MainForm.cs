@@ -606,7 +606,7 @@ public partial class MainForm : Form
                     {
                         ["exported_at"] = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"),
                         ["app_name"] = "Smart Password Manager C# Desktop",
-                        ["app_version"] = "v4.0.0",
+                        ["app_version"] = "v4.0.1",
                         ["app_type"] = "Desktop",
                         ["lib_name"] = "smartpasslib-csharp",
                         ["lib_version"] = "v4.0.0",
@@ -848,7 +848,7 @@ public partial class MainForm : Form
 "  • Use emoji or non-Latin characters for stronger secrets\n\n" +
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
-"  Version v4.0.0 | Copyright © 2026 Alexander Suvorov\n" +
+"  Version v4.0.1 | Copyright © 2026 Alexander Suvorov\n" +
 "  Licensed under BSD 3-Clause License | https://github.com/smartlegionlab\n" +
 "══════════════════════════════════════════════════════════════════════════════";
     }
