@@ -2,7 +2,7 @@
  * SmartPassLib v4.0.0 - C# smart password generator
  * Cross-platform deterministic password generation
  * Same secret + same length = same password across all platforms
- * Decentralized by design — no central servers, no cloud dependency, no third-party trust required
+ * Decentralized by design - no central servers, no cloud dependency, no third-party trust required
  *
  * Compatible with smartpasslib Python/JS/Kotlin/Go implementations
  *

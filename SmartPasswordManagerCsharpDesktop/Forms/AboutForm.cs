@@ -69,7 +69,7 @@ public partial class AboutForm : Form
 
         var descLabel = new Label
         {
-            Text = "Deterministic password manager\nSame secret + same length = same password\nZero-password storage architecture\nDecentralized by design — no cloud, no database, no trust required",
+            Text = "Deterministic password manager\nSame secret + same length = same password\nZero-password storage architecture\nDecentralized by design - no cloud, no database, no trust required",
             Font = new Font("Segoe UI", 9),
             ForeColor = Color.FromArgb(200, 200, 200),
             TextAlign = ContentAlignment.MiddleCenter,
@@ -103,7 +103,7 @@ public partial class AboutForm : Form
                    "🌐 Cross-platform compatible\n" +
                    "⚡ Lightweight & fast\n" +
                    "🛡️ Zero-knowledge architecture\n" +
-                   "🏛️ Decentralized — no central servers",
+                   "🏛️ Decentralized - no central servers",
             Font = new Font("Segoe UI", 9),
             ForeColor = Color.FromArgb(180, 180, 190),
             Dock = DockStyle.Fill,

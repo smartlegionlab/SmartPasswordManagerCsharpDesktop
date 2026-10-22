@@ -4,8 +4,8 @@
 
 **Desktop manager for deterministic smart passwords. Generate, manage, and retrieve passwords without storing them. Your secret phrase never leaves your device.**
 
-**Decentralized by Design**: Unlike traditional password managers that store encrypted vaults on central servers, 
-Smart Password Manager stores nothing. Your secrets never leave your device. Passwords are regenerated on-demand — 
+**Decentralized by Design**: Unlike traditional password managers that store encrypted vaults on central servers,
+Smart Password Manager stores nothing. Your secrets never leave your device. Passwords are regenerated on-demand -
 **no cloud, no database, no trust required**.
 
 ---
@@ -15,6 +15,7 @@ Smart Password Manager stores nothing. Your secrets never leave your device. Pas
 [![GitHub release](https://img.shields.io/github/v/release/smartlegionlab/SmartPasswordManagerCsharpDesktop)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/)
 [![GitHub stars](https://img.shields.io/github/stars/smartlegionlab/SmartPasswordManagerCsharpDesktop?style=social)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/smartlegionlab/SmartPasswordManagerCsharpDesktop?style=social)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/network/members)
+[![Website](https://img.shields.io/badge/🌐_Website-smartlegionlab.github.io-blue)](https://smartlegionlab.github.io/projects/smart-password-manager-csharp-desktop.html)
 ![Platform](https://img.shields.io/badge/platform-windows-lightgrey)
 
 ---
@@ -26,22 +27,6 @@ Smart Password Manager stores nothing. Your secrets never leave your device. Pas
 **Summary:** Software provided "AS IS" without warranty. You assume all risks.
 
 **Full legal disclaimer:** See [DISCLAIMER.md](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/blob/master/DISCLAIMER.md)
-
----
-
-## 🔄 Breaking Change (v4.0.0)
-
-> **⚠️ This version uses [smartpasslib-csharp](https://github.com/smartlegionlab/smartpasslib-csharp) v4.0.0, which is NOT backward compatible with v1.x.x**
-
-Smart passwords created with older versions **cannot be regenerated** with v4.0.0.
-
-**What changed:**
-- Dynamic iterations: private key 15-30 steps (was fixed 30), public key 45-60 steps (was fixed 60)
-- Expanded Google-compatible character set
-- Secret phrases now require minimum 12 characters (was 4)
-- Password length now limited to 100 characters (was 1000)
-
-📖 **Full migration instructions** → see [MIGRATION.md](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop/blob/master/MIGRATION.md)
 
 ---
 
@@ -72,7 +57,7 @@ Smart passwords created with older versions **cannot be regenerated** with v4.0.
 ## Security Model
 
 - **Proof of Knowledge**: Public keys verify secrets without exposing them
-- **Decentralized Trust**: No third party needed — you control your secrets completely
+- **Decentralized Trust**: No third party needed - you control your secrets completely
 - **Deterministic Security**: Same secret + length = same password, always
 - **Metadata Separation**: Non-sensitive data stored in JSON file
 - **Local Processing**: Secret and password never leave your device
@@ -89,9 +74,9 @@ Smart passwords created with older versions **cannot be regenerated** with v4.0.
 
 ## Technical Foundation
 
-Powered by **[smartpasslib-csharp](https://github.com/smartlegionlab/smartpasslib-csharp)** — C# implementation of deterministic password generation.
+Powered by **[smartpasslib-csharp](https://github.com/smartlegionlab/smartpasslib-csharp)** - C# implementation of deterministic password generation.
 
-**Key derivation (same as Python/JS/Kotlin/Go versions v4.0.0):**
+**Key derivation (same as Python/JS/Kotlin/Go/Rust versions v4.0.0):**
 
 | Key Type    | Iterations              | Purpose                                               |
 |-------------|-------------------------|-------------------------------------------------------|
@@ -111,7 +96,7 @@ Powered by **[smartpasslib-csharp](https://github.com/smartlegionlab/smartpassli
 - No central authority required
 - Metadata can be synced via any channel
 - Your security depends only on your secret phrase
-- Works offline — no internet connection required
+- Works offline - no internet connection required
 
 ## Download
 
@@ -201,19 +186,19 @@ The application allows you to export password metadata to the **Smart Password M
 
 ### Strong Secret Examples
 ```
-✅ "MyStrongSecretPhrase2026!"   — mixed case + numbers + symbols
-✅ "P@ssw0rd!LongSecret"         — special chars + numbers + length
-✅ "КотБегемот2026НаДиете"       — Cyrillic + numbers
+✅ "MyStrongSecretPhrase2026!"   - mixed case + numbers + symbols
+✅ "P@ssw0rd!LongSecret"         - special chars + numbers + length
+✅ "КотБегемот2026НаДиете"       - Cyrillic + numbers
 ```
 
 ### Weak Secret Examples (avoid)
 ```
-❌ "short"                       — too short, rejected
-❌ "GitHub Account"              — using description as secret (weak!)
-❌ "password"                    — dictionary word, too short
-❌ "1234567890"                  — only digits, too short
-❌ "qwerty123"                   — keyboard pattern
-❌ Same as description           — never use the same value as description
+❌ "short"                       - too short, rejected
+❌ "GitHub Account"              - using description as secret (weak!)
+❌ "password"                    - dictionary word, too short
+❌ "1234567890"                  - only digits, too short
+❌ "qwerty123"                   - keyboard pattern
+❌ Same as description           - never use the same value as description
 ```
 
 ### Decentralized Nature
@@ -224,7 +209,7 @@ The application allows you to export password metadata to the **Smart Password M
 - No support team can recover your access
 - Your secret phrase is the ONLY key
 
-**This is the price of true decentralization** — you are completely in control.
+**This is the price of true decentralization** - you are completely in control.
 
 ## Cross-Platform Data Transfer
 
@@ -232,7 +217,7 @@ Smart Password Manager Desktop (C#) supports seamless metadata transfer across a
 
 **Methods:**
 - **QR codes** - Transfer password metadata from Desktop to Android app instantly
-- **Export/Import** - JSON export/import works across all platforms (Desktop Python, Web, CLI, Android)
+- **Export/Import** - JSON export/import works across all platforms
 
 **Cross-platform compatibility:**
 - Same JSON format for export/import on all platforms
@@ -243,15 +228,18 @@ Smart Password Manager Desktop (C#) supports seamless metadata transfer across a
 
 Smart Password Manager Desktop (C#) produces **identical passwords** to:
 
-| Platform         | Application                                                                             |
-|------------------|-----------------------------------------------------------------------------------------|
-| Python CLI       | [CLI PassMan](https://github.com/smartlegionlab/clipassman)                             |
-| Python CLI Gen   | [CLI PassGen](https://github.com/smartlegionlab/clipassgen)                             |
-| Desktop Python   | [Desktop Manager](https://github.com/smartlegionlab/smart-password-manager-desktop)     |
-| CLI C#           | [CLI Manager (C#)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpCli)     |
-| CLI Generator C# | [CLI Generator (C#)](https://github.com/smartlegionlab/SmartPasswordGeneratorCsharpCli) |
-| Web              | [Web Manager](https://github.com/smartlegionlab/smart-password-manager-web)             |
-| Android          | [Android Manager](https://github.com/smartlegionlab/smart-password-manager-android)     |
+| Platform         | Application                                                                                    |
+|------------------|------------------------------------------------------------------------------------------------|
+| Python CLI       | [CLI PassMan](https://github.com/smartlegionlab/clipassman)                                    |
+| Python CLI Gen   | [CLI PassGen](https://github.com/smartlegionlab/clipassgen)                                    |
+| Desktop Python   | [Desktop Manager](https://github.com/smartlegionlab/smart-password-manager-desktop)            |
+| CLI C#           | [CLI Manager (C#)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpCli)            |
+| CLI Generator C# | [CLI Generator (C#)](https://github.com/smartlegionlab/SmartPasswordGeneratorCsharpCli)        |
+| Rust CLI         | [CLI Manager (Rust)](https://github.com/smartlegionlab/smart-password-manager-cli-rs)          |
+| Rust GUI         | [Desktop Manager (Rust, GUI)](https://github.com/smartlegionlab/smart-password-manager-gui-rs) |
+| Rust TUI         | [Desktop Manager (Rust, TUI)](https://github.com/smartlegionlab/smart-password-manager-tui-rs) |
+| Web              | [Web Manager](https://github.com/smartlegionlab/smart-password-manager-web)                    |
+| Android          | [Android Manager](https://github.com/smartlegionlab/smart-password-manager-android)            |
 
 **Data transfer:** Use QR codes or Export/Import to sync metadata across all platforms.
 
@@ -263,27 +251,24 @@ Smart Password Manager Desktop (C#) produces **identical passwords** to:
 - **[smartpasslib-kotlin](https://github.com/smartlegionlab/smartpasslib-kotlin)** - Kotlin
 - **[smartpasslib-go](https://github.com/smartlegionlab/smartpasslib-go)** - Go
 - **[smartpasslib-csharp](https://github.com/smartlegionlab/smartpasslib-csharp)** - C#
+- **[smartpasslib-rs](https://github.com/smartlegionlab/smartpasslib-rs)** - Rust
 
 **CLI Applications:**
 - **[CLI Smart Password Manager (Python)](https://github.com/smartlegionlab/clipassman)**
 - **[CLI Smart Password Generator (Python)](https://github.com/smartlegionlab/clipassgen)**
 - **[CLI Smart Password Manager (C#)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpCli)**
 - **[CLI Smart Password Generator (C#)](https://github.com/smartlegionlab/SmartPasswordGeneratorCsharpCli)**
+- **[CLI Smart Password Manager (Rust)](https://github.com/smartlegionlab/smart-password-manager-cli-rs)**
 
 **Desktop Applications:**
 - **[Desktop Smart Password Manager (Python)](https://github.com/smartlegionlab/smart-password-manager-desktop)**
 - **[Desktop Smart Password Manager (C#)](https://github.com/smartlegionlab/SmartPasswordManagerCsharpDesktop)** (this)
+- **[Desktop Smart Password Manager (Rust, GUI)](https://github.com/smartlegionlab/smart-password-manager-gui-rs)**
+- **[Desktop Smart Password Manager (Rust, TUI)](https://github.com/smartlegionlab/smart-password-manager-tui-rs)**
 
 **Other:**
 - **[Web Smart Password Manager](https://github.com/smartlegionlab/smart-password-manager-web)**
 - **[Android Smart Password Manager](https://github.com/smartlegionlab/smart-password-manager-android)**
-
-## Version History
-
-| Version          | smartpasslib-csharp | Status                   | Migration Required     |
-|------------------|---------------------|--------------------------|------------------------|
-| v1.x.x and below | v1.x.x              | ❌ Deprecated/Unsupported | Must migrate to v4.x.x |
-| **v4.0.0+**      | **v4.0.0+**         | ✅ Current                | N/A                    |
 
 ## License
 

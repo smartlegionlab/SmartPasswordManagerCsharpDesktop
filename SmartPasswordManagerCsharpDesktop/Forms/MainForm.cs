@@ -781,7 +781,7 @@ public partial class MainForm : Form
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\n" +
 "  • No cloud, no database, no trust required\n" +
 "  • Your secrets never leave your device\n" +
-"  • There is no \"forgot password\" button — you are in complete control\n" +
+"  • There is no \"forgot password\" button - you are in complete control\n" +
 "  • Metadata can be synced via any channel (USB, cloud, even paper)\n\n" +
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
