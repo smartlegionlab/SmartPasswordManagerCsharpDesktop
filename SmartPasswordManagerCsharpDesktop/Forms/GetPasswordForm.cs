@@ -180,8 +180,8 @@ public partial class GetPasswordForm : Form
         _cancelButton = new Button
         {
             Text = "Cancel",
-            Location = new Point(290, 0),
-            Size = new Size(100, 42),
+            Location = new Point(170, 0),
+            Size = new Size(120, 42),
             FlatStyle = FlatStyle.Flat,
             BackColor = Color.FromArgb(60, 60, 68),
             ForeColor = Color.FromArgb(220, 220, 230),
@@ -194,9 +194,9 @@ public partial class GetPasswordForm : Form
 
         _okButton = new Button
         {
-            Text = "Generate Password",
-            Location = new Point(395, 0),
-            Size = new Size(105, 42),
+            Text = "Generate",
+            Location = new Point(300, 0),
+            Size = new Size(200, 42),
             FlatStyle = FlatStyle.Flat,
             BackColor = Color.FromArgb(40, 167, 69),
             ForeColor = Color.White,

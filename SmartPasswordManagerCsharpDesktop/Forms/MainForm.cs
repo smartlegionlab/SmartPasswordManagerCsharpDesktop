@@ -568,8 +568,11 @@ public partial class MainForm : Form
                     }
 
                     var password = SmartPasswordGenerator.GenerateSmartPassword(dialog.Secret, currentPassword.Length);
-                    Clipboard.SetText(password);
-                    MessageBox.Show("Password copied to clipboard!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    using (var resultForm = new PasswordResultForm(password, currentPassword.Description, currentPassword.Length))
+                    {
+                        resultForm.ShowDialog();
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -605,7 +608,7 @@ public partial class MainForm : Form
                     {
                         ["exported_at"] = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss"),
                         ["app_name"] = "Smart Password Manager C# Desktop",
-                        ["app_version"] = "v4.0.3",
+                        ["app_version"] = "v4.0.4",
                         ["app_type"] = "Desktop",
                         ["lib_name"] = "smartpasslib-csharp",
                         ["lib_version"] = "v4.0.0",
@@ -783,7 +786,7 @@ public partial class MainForm : Form
 
 "  To retrieve a password:\n" +
 "  → Select the entry → Click 'Get' → Enter secret phrase\n" +
-"  → Password is copied to clipboard automatically\n\n" +
+"  → Password is shown in a window\n\n" +
 
 "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n" +
 "  SECURITY NOTES\n" +
@@ -801,7 +804,7 @@ public partial class MainForm : Form
 "  Ctrl + N     →  Add new password\n" +
 "  Ctrl + E     →  Edit selected password\n" +
 "  Ctrl + R     →  Show QR code for selected password\n" +
-"  Ctrl + G     →  Get password (copy to clipboard)\n" +
+"  Ctrl + G     →  Get password\n" +
 "  Ctrl + I     →  Import passwords\n" +
 "  Ctrl + X     →  Export passwords\n" +
 "  Ctrl + F     →  Focus search box\n" +
@@ -847,7 +850,7 @@ public partial class MainForm : Form
 "  • Use emoji or non-Latin characters for stronger secrets\n\n" +
 
 "══════════════════════════════════════════════════════════════════════════════\n" +
-"  Version v4.0.3 | Copyright © 2026 Alexander Suvorov\n" +
+"  Version v4.0.4 | Copyright © 2026 Alexander Suvorov\n" +
 "  Licensed under BSD 3-Clause License | https://github.com/smartlegionlab\n" +
 "══════════════════════════════════════════════════════════════════════════════";
     }
