@@ -66,10 +66,9 @@ public partial class MainForm : Form
         _menuStrip = new MenuStrip
         {
             BackColor = Color.FromArgb(30, 30, 35),
-            ForeColor = Color.FromArgb(220, 220, 230)
+            ForeColor = Color.FromArgb(220, 220, 230),
+            Renderer = new DarkMenuRenderer()
         };
-
-        _menuStrip.RenderMode = ToolStripRenderMode.System;
 
         var fileMenu = new ToolStripMenuItem("File");
 
@@ -332,7 +331,7 @@ public partial class MainForm : Form
         contextMenu.Items.Add(new ToolStripSeparator());
         contextMenu.Items.Add("Delete", null, (s, e) => DeletePassword());
 
-        contextMenu.RenderMode = ToolStripRenderMode.System;
+        contextMenu.Renderer = new DarkMenuRenderer();
 
         _listView.ContextMenuStrip = contextMenu;
 
@@ -1089,4 +1088,68 @@ public partial class MainForm : Form
         }
     }
 
+}
+
+public class DarkMenuRenderer : ToolStripProfessionalRenderer
+{
+    public DarkMenuRenderer() : base(new DarkMenuColors()) { }
+
+    protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+    {
+        if (e.Item.Selected)
+        {
+            Rectangle rect = new Rectangle(0, 0, e.Item.Width, e.Item.Height);
+            using (Brush brush = new SolidBrush(Color.FromArgb(0, 80, 160)))
+            {
+                e.Graphics.FillRectangle(brush, rect);
+            }
+            using (Pen pen = new Pen(Color.FromArgb(0, 100, 200), 1))
+            {
+                e.Graphics.DrawRectangle(pen, rect);
+            }
+        }
+        else if (e.Item.Pressed)
+        {
+            Rectangle rect = new Rectangle(0, 0, e.Item.Width, e.Item.Height);
+            using (Brush brush = new SolidBrush(Color.FromArgb(0, 60, 140)))
+            {
+                e.Graphics.FillRectangle(brush, rect);
+            }
+        }
+        else
+        {
+            base.OnRenderMenuItemBackground(e);
+        }
+    }
+
+    protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+    {
+        if (e.Item.Selected || e.Item.Pressed)
+        {
+            e.TextColor = Color.White;
+        }
+        else
+        {
+            e.TextColor = Color.FromArgb(200, 200, 200);
+        }
+        base.OnRenderItemText(e);
+    }
+}
+
+public class DarkMenuColors : ProfessionalColorTable
+{
+    public override Color MenuItemSelected => Color.FromArgb(0, 80, 160);
+    public override Color MenuItemSelectedGradientBegin => Color.FromArgb(0, 80, 160);
+    public override Color MenuItemSelectedGradientEnd => Color.FromArgb(0, 70, 150);
+    public override Color MenuItemPressedGradientBegin => Color.FromArgb(0, 60, 140);
+    public override Color MenuItemPressedGradientEnd => Color.FromArgb(0, 50, 130);
+    public override Color MenuStripGradientBegin => Color.FromArgb(25, 25, 25);
+    public override Color MenuStripGradientEnd => Color.FromArgb(25, 25, 25);
+    public override Color ImageMarginGradientBegin => Color.FromArgb(25, 25, 25);
+    public override Color ImageMarginGradientEnd => Color.FromArgb(25, 25, 25);
+    public override Color ImageMarginGradientMiddle => Color.FromArgb(25, 25, 25);
+    public override Color ToolStripDropDownBackground => Color.FromArgb(30, 30, 30);
+    public override Color MenuBorder => Color.FromArgb(60, 60, 60);
+    public override Color SeparatorDark => Color.FromArgb(60, 60, 60);
+    public override Color SeparatorLight => Color.FromArgb(40, 40, 40);
 }
